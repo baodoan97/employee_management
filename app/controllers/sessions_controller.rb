@@ -4,8 +4,7 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user = User.find_by(email: params[:session][:email])
-
+		    user = User.find_by(email: params[:session][:email])
 			if user && user.authenticate(params[:session][:password])
 			session[:user_id] = user.id
 			flash[:success] = "You have successfully logged in"
@@ -13,8 +12,8 @@ class SessionsController < ApplicationController
 			else
 			flash.now[:danger] = "There was something wrong with your login information"
 			render 'new'
-		end
-		byebug
+		    end
+		# byebug
 	end
 
 	def destroy

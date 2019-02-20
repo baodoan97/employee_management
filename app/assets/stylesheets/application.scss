@@ -31,4 +31,14 @@
 }
 .form-group{
 	margin-top: 1.5rem;
+}@media (min-width: 576px)
+{
+.col-sm-10 {
+    flex: 0 0 83.3333333333%;
+     max-width: 100%; 
 }
+}
+.form-group {
+     margin-top: 0rem; 
+}
+
