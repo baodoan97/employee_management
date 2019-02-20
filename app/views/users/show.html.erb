@@ -1,9 +1,13 @@
 <div class="jumbotron">
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<h1 class="text-center"><%= @user.username %></h1>
-				<h1 class="text-center"><%= @user.email %></h1>
+		</br>
+		<div align="center"> <%= image_tag @user.avatar.url ,class: "img" %></div>
+		<h2 align="center">Name: <%= @user.username %></h2>
+		<h2 align="center">Email: <%= simple_format(@user.email) %></h2>
+		<div class="well col-xs-8 col-xs-offset-2">
+			<div class="user-actions">
+				<%= link_to "Edit this user", edit_user_path(@user), class: "btn btn-xs btn-primary" %>
+				<%= link_to "View all user", users_path, class: "btn btn-xs btn-success" %>
 			</div>
 		</div>
 	</div>

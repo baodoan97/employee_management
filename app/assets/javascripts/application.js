@@ -17,3 +17,35 @@
 //= require jquery3
 //= require popper
 //= require bootstrap
+function main() {
+	$( "#a" ).click(function() {
+	$('#file-input').trigger('click'); 
+	});
+
+	$('input[type=file]').change(function () {
+    // var fileToUpload = $('#file-input').prop('files')[0];
+    //  $('#a').attr('src',fileToUpload.name);
+    //   console.log(fileToUpload);
+     if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#a').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    $('.fa-exchange').hover(function(){
+          $(this).fadeOut( 100 );
+            $(this).fadeIn( 500 );
+    });
+
+    // example = true;
+    // $(window).bind('refesh', function(){
+    //  if 
+    // });
+    // if(example){
+    //  alert("x");
+    //  }
+}
+$(document).ready(main);
