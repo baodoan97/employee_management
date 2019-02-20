@@ -1,16 +1,20 @@
-<div>
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12 m-auto">
+	<div align="center">
+     <% @task.images.each do |t| %>
+     <%= image_tag t.pictrue.url ,class: "imgtask" %>
+	 <% end %>
+	</div>
+	<center>
 		<%= @task.taskname %>
 		<br/>
 		<%= @task.content %>
 		<br/>
 		<%= link_to "Edit task", edit_task_path, class: "btn btn-primary" %>
 
-		<%= link_to "Delete this task", task_path(@task), method: :delete,
-
-																	data: { confirm: "Are you sure you want to delete the task?"},
-
-																	class: "btn btn-xs btn-danger" %>
+		<%= link_to "Delete this task", task_path(@task), method: :delete %>
 
 		<%= link_to "Back to list task", tasks_path, class: "btn btn-success" %>
-
+        </center>
+</div>
 </div>
