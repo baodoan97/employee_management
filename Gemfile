@@ -6,6 +6,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-rails'
 #Bootstrap 4
 gem 'bootstrap', '~> 4.3.1'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
@@ -38,6 +39,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+gem "paperclip", "~> 6.0.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
