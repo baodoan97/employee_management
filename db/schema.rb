@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2019_02_20_035734) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "taskname"
+    t.string "content"
   end
 
   create_table "users", force: :cascade do |t|

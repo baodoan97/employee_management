@@ -1,0 +1,33 @@
+
+		<div class="row">
+			<div class="col-12">
+				<table class="table">
+				  <thead class="thead-dark">
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Content</th>
+				      <th scope="col">Employees</th>
+				      <th scope="col">-</th>
+				      <th scope="col">-</th>
+				      <th scope="col">-</th>
+				    </tr>
+				  </thead>
+				<% obj.each do |task| %>
+				  <tbody>
+				    <tr>
+				      <th scope="row"><%= task.id %></th>
+				      <td><%= task.taskname %></td>
+				      <td><%= task.content %></td>
+				      <td>Geogre</td>
+				      <td> <%= link_to 'Show', task_path(task), class:"btn btn-success btn-md mr-3" %> </td>
+				      <td> <%= link_to 'Edit', edit_task_path(task), class:"btn btn-primary btn-md mr-3" %> </td>
+					  <td> <%= link_to 'Delete', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md" %></td>
+				    </tr>
+				  </tbody>
+				<% end %>
+				</table>
+				
+			</div>
+		</div>
+

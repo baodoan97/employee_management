@@ -1,0 +1,16 @@
+<div>
+		<%= @task.taskname %>
+		<br/>
+		<%= @task.content %>
+		<br/>
+		<%= link_to "Edit task", edit_task_path, class: "btn btn-primary" %>
+
+		<%= link_to "Delete this task", task_path(@task), method: :delete,
+
+																	data: { confirm: "Are you sure you want to delete the task?"},
+
+																	class: "btn btn-xs btn-danger" %>
+
+		<%= link_to "Back to list task", tasks_path, class: "btn btn-success" %>
+
+</div>
