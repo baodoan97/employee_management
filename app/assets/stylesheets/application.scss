@@ -5,12 +5,12 @@
 }
 .background-login{
 	background-image: url(bg.jpg);
-	width: 100%;
+	max-width: 100%;
 	height:800px;
 	background-size:cover;
 }
 .login{
-	width: 30%;
+	max-width: 500px;
 	background-color: rgba(0,0,0,0.5) !important;
 	height: 300px;
 	margin: auto;
@@ -35,10 +35,9 @@
 {
 .col-sm-10 {
     flex: 0 0 83.3333333333%;
-     max-width: 100%; 
+     max-width: 100%;
 }
 }
 .form-group {
-     margin-top: 0rem; 
+     margin-top: 0rem;
 }
-
