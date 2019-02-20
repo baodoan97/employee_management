@@ -13,7 +13,7 @@
     <div class="form-group ">
       <div align="center">
       </div>
-      <center>
+      <center>    
       <div class="image-upload">
         <label for="file-input">
           <div class="changeavt">
@@ -29,7 +29,7 @@
       <%= f.label :username, class:"h4" %> <br/>
       <%= f.text_field :username, class:"form-control", placeholder:"Enter username" %>
     </div>
-    <% if !!current_user.admin? %>
+    <% if @user.new_record? == true %>
     <div class="form-group">
       <%= f.label :email, class:"h4" %> <br/>
       <%= f.email_field :email, class:"form-control", placeholder:"Enter email" %>
