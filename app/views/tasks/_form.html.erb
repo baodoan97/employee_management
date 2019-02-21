@@ -1,5 +1,6 @@
 <%= form_for @task , html: { multipart: true } do |f| %>
 <div class="form-group ">
+	<% $s = @task.id  %>
 	<%= f.label :taskname, class: "h4" %> <br/>
 	<%= f.text_field :taskname, class: "form-control", placeholder:"Enter name of task" %>
 </div>
@@ -10,6 +11,20 @@
 <div class="form-group">
       <%= f.file_field :photo, multiple: true, class: "upload-image" %>
 </div>
+<% if @task.new_record? == false %>
+
+<% end %>
 <%= f.submit class: "btn btn-dark ml-auto" %>
 <% end %>
 <%= link_to "Back to list tasks", tasks_path, class: "ml-auto" %>
+
+<div class="form-group">
+	<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
+	<%= hidden_field_tag "task[task_id]", "#{@task.id}" %> <!-- tao paramasters -->
+	   <%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
+			<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox")
+			} + image_tag(cb.text.url ,class: "imgtask")%>
+	   <% end %>
+        <%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
+	<% end %>
+</div>
