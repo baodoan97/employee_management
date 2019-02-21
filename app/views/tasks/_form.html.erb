@@ -1,13 +1,15 @@
-<%= form_for @task do |f| %>
-	<div class="form-group ">
-	    <%= f.label :taskname, class:"h4" %> <br/>
-	    <%= f.text_field :taskname, class:"form-control", placeholder:"Enter name of task" %>
-    </div>
-    <div class="form-group">
-	    <%= f.label :content, class:"h4" %> <br/>
-	    <%= f.text_field :content, class:"form-control", placeholder:"Enter content of task" %>
-    </div>
-		
-		<%= f.submit class:"btn btn-dark ml-auto" %>
+<%= form_for @task , html: { multipart: true } do |f| %>
+<div class="form-group ">
+	<%= f.label :taskname, class: "h4" %> <br/>
+	<%= f.text_field :taskname, class: "form-control", placeholder:"Enter name of task" %>
+</div>
+<div class="form-group">
+	<%= f.label :content, class:"h4" %> <br/>
+	<%= f.text_field :content, class: "form-control", placeholder:"Enter content of task" %>
+</div>
+<div class="form-group">
+      <%= f.file_field :photo, multiple: true, class: "upload-image" %>
+</div>
+<%= f.submit class: "btn btn-dark ml-auto" %>
 <% end %>
-<%= link_to "Back to list tasks", tasks_path, class:"ml-auto" %>
+<%= link_to "Back to list tasks", tasks_path, class: "ml-auto" %>

@@ -5,9 +5,19 @@ class TasksController < ApplicationController
 	end
 
 	def create
-		@task = Task.new(task_params)
-		if @task.save
-			flash[:success] = "Task was created successfully"
+		@task = Task.new
+		@task.taskname = task_params[:taskname]
+		@task.content = task_params[:content]
+        if @task.save
+        	   i = 0
+		       while (i < task_params[:photo].count) do
+		          @image = Image.new
+				  @image.task = @task
+				  @image.pictrue = task_params[:photo][i]
+				  @image.save
+				  i = i + 1
+		       end
+	        flash[:success] = "Task was created successfully"
 			redirect_to task_path(@task)
 		else
 			render 'new'
@@ -42,7 +52,7 @@ class TasksController < ApplicationController
 	end
 	private
 	def task_params
-		params.require(:task).permit(:taskname, :content)
+		params.require(:task).permit(:taskname, :content,photo: [])
 	end
 
 	def set_task
