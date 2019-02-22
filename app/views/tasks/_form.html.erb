@@ -9,30 +9,32 @@
 	<%= f.text_field :content, class: "form-control", placeholder:"Enter content of task" %>
 </div>
 <div class="form-group">
-      <%= f.file_field :photo, multiple: true, class: "upload-image" %>
+	<%= f.file_field :photo, multiple: true, class: "upload-image" %>
 </div>
-<div class="form-group">
-	    <%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
-			<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
+<% if current_user.admin? %>
+	<div class="form-group">
+		<%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
+		<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
 		<% end %>
 	</div>
+<% end %>
 <div class="form-group">
 	<%= f.date_field :date, class: 'form-control' %>
 </div>
 <% if @task.new_record? == false %>
-
 <% end %>
 <%= f.submit class: "btn btn-dark ml-auto" %>
 <% end %>
 <%= link_to "Back to list tasks", tasks_path, class: "ml-auto" %>
-
+<% if @task.new_record? == false %>
 <div class="form-group">
 	<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
 	<%= hidden_field_tag "task[task_id]", "#{@task.id}" %> <!-- tao paramasters -->
-	   <%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
-			<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox")
-			} + image_tag(cb.text.url ,class: "imgtask")%>
-	   <% end %>
-        <%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
+	<%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
+	<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(checked: false,class: "checkbox")
+	} + image_tag(cb.text.url ,class: "imgtask")%>
+	<% end %>
+	<%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
 	<% end %>
 </div>
+<% end %>
