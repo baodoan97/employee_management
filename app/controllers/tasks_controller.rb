@@ -109,9 +109,9 @@ class TasksController < ApplicationController
 
 	def index
 		if current_user.admin?
-			@task = Task.all
+			@task = Task.all.where("DATE(date) = ?", Date.today)
 		else
-			@task = current_user.tasks
+			@task = current_user.tasks.where("DATE(date) = ?", Date.today)
 		end
 	end
 
