@@ -22,6 +22,11 @@ border-radius: 15px
 color: #fff;
 padding-top: 12px;
 }
+
+.login > p{
+    color: #fff;    
+}
+
 .input {
 width:90%;
 margin:auto;
@@ -89,4 +94,21 @@ img.imgtask {
     border: rgba(0, 0, 0, 0.075);
     border-style: outset;
 }
+.jumbotron{
+    margin-bottom: 0;
+}
+.login-btn {
+    border-radius: 30px;
+}
 
+.user-bg {
+    margin-top: 100px;
+    background: #f8f9fa;
+    padding: 40px 30px 40px 30px;
+}
+
+.avatar {
+    width:150px;
+    height: 150px;
+    border-radius: 50%;
+}

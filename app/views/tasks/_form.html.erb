@@ -11,6 +11,11 @@
 <div class="form-group">
       <%= f.file_field :photo, multiple: true, class: "upload-image" %>
 </div>
+<div class="form-group">
+	    <%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
+			<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
+		<% end %>
+	</div>
 <% if @task.new_record? == false %>
 
 <% end %>
