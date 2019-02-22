@@ -18,6 +18,9 @@
 		<% end %>
 	</div>
 <% end %>
+<div class="form-group">
+	<%= f.date_field :date, class: 'form-control' %>
+</div>
 <% if @task.new_record? == false %>
 <% end %>
 <%= f.submit class: "btn btn-dark ml-auto" %>
