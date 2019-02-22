@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
 	before_action :set_task, only: [:edit, :update, :show, :destroy]
 	before_action :remove_images_file, only: [:destroy]
+	before_action :require_user
+	before_action :require_admin_user, only: [:edit, :update, :destroy]
 	def new
 		@task = Task.new
 	end
@@ -102,6 +104,13 @@ class TasksController < ApplicationController
     
 	def set_task
 		@task = Task.find(params[:id])
+	end
+
+	def require_admin_user
+			if current_user.admin? == false
+				flash[:danger] = "You dont have permission to do this"
+				redirect_to tasks_path		
+			end
 	end
 
 	def remove_images_file
