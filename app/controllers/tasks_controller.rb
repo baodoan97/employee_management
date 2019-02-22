@@ -59,7 +59,20 @@ class TasksController < ApplicationController
         	 "taskname" => task_params[:taskname],
         	 "content" => task_params[:content],
              }
-		if @task.update(paTASK)
+		if @task.update(paTASK)   
+            j=1
+            if current_user.admin? == false 
+        			@user = current_user
+        			@user.tasks << @task
+        	else   
+	        	while (j<task_params[:user_task_ids].count) do
+	        		
+		        		@user = User.find(task_params[:user_task_ids][j].to_i)
+						@user.tasks << @task
+					j += 1
+	        	end
+            end
+            
 			if task_params[:photo] != nil
 			 i = 0
 		       while (i < task_params[:photo].count) do

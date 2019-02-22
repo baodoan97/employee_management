@@ -1,0 +1,24 @@
+<div class="container">
+	<h1 align="center">Listing all Users</h1>
+	<% @users.each do |user| %>
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="well well-lg">
+				<div class="user-actions">
+					<div align="center" class="avatar m-auto"> <%= image_tag user.avatar.url ,class: "img" %>
+					</div>
+				Use name: <%= link_to user.username, user_path(user) %>
+			    </br>
+				Email:	  <%= user.email %>
+				</div>
+				<div class="user-actions">
+					<%= link_to "Edit this user", edit_user_path(user), class: "btn btn-xs btn-primary" %>
+					<% if logged_in? && current_user.admin == true then %>
+					<%= link_to "Delete this user", user_path(user), method: :delete,
+					data: { confirm: "Are you sure you want to delete the user?"},
+					class: "btn btn-xs btn-danger" %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
