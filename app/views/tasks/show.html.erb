@@ -18,13 +18,16 @@
 		<% end %>
 	
 		<br/>
+		<% if ( current_user.admin?) %>
 		<%= link_to "Edit", edit_task_path, class: "btn btn-md btn-primary" %>
 
 		
 		<%= link_to "Delete", task_path(@task), method: :delete,
 																	data: { confirm: "Are you sure you want to delete the task?"}, 														class: "btn btn-md btn-danger" %>
+		<%= link_to "Back", tasks_path, class: "btn btn-md btn-success" %>															
+		<% end %>
 
-		<%= link_to "ALL list task", tasks_path, class: "btn btn-md btn-success" %>
+		<%= link_to "Back to list task", tasks_path, class: "btn btn-md btn-success" %>
         </center>
 </div>
 </div>

@@ -19,10 +19,10 @@
 				  <tbody>
 				    <tr>
 				      <th scope="row"><%= task.id %></th>
-				      <td><%= task.taskname %></td>
-				      <td><%= task.content %></td>
+				      <td><%= truncate(task.taskname, length: 20) %></td>
+				      <td><%= truncate(task.content, length: 20) %></td>
 				      <td><% task.users.each do |user| %>
-			            #<%= link_to user[:username], user_path(user) %>, 
+			            #<%= link_to user[:username], user_path(user) %>  &nbsp
 		            	<% end %>
 				     </td>
 				      <td> <%= link_to 'Show', task_path(task), class:"btn btn-success btn-md mr-3" %> </td>
