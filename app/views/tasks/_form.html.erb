@@ -16,6 +16,9 @@
 			<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
 		<% end %>
 	</div>
+<div class="form-group">
+	<%= f.date_field :date, class: 'form-control' %>
+</div>
 <% if @task.new_record? == false %>
 
 <% end %>

@@ -89,7 +89,11 @@ class TasksController < ApplicationController
 	end
 
 	def index
-		@task = Task.all
+		if current_user.admin?
+			@task = Task.all
+		else
+			@task = current_user.tasks
+		end
 	end
 
 	def destroy
