@@ -1,10 +1,10 @@
-<div class="jumbotron">
-	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<h1 class="text-center"><%= @user.username %></h1>
-				<h1 class="text-center"><%= @user.email %></h1>
-			</div>
+<div class="container">
+		<div class="user-bg text-center">
+			<div align="center" class="avatar m-auto"> <%= image_tag @user.avatar.url ,class: "img" %></div>
+			<h2 align="center"> <%= @user.username %></h2>
+			<h2 align="center"> <%= simple_format(@user.email) %></h2>
+				<%= link_to "Edit this user", edit_user_path(@user), class: "btn btn-xs btn-primary" %>
+				<%= link_to "View all user", users_path, class: "btn btn-xs btn-success" %>
 		</div>
+
 	</div>
-</div>

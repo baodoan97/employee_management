@@ -10,17 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_102021) do
+ActiveRecord::Schema.define(version: 2019_02_22_070551) do
+
+  create_table "images", force: :cascade do |t|
+    t.integer "task_id"
+    t.string "pictrue_file_name"
+    t.string "pictrue_content_type"
+    t.integer "pictrue_file_size"
+    t.datetime "pictrue_updated_at"
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string "taskname"
+    t.string "content"
+    t.date "date"
+  end
+
+  create_table "user_tasks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "task_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
-    t.string "avatar"
     t.string "password_digest"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.boolean "admin"
   end
 
 end

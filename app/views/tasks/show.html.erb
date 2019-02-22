@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12 m-auto">
+	<div align="center">
+     <% @task.images.each do |t| %>
+     <%= image_tag t.pictrue.url ,class: "imgtask" %>
+	 <% end %>
+	</div>
+	<center>
+		<%= @task.taskname %>
+		<br/>
+		<%= @task.content %>
+		<br/>
+		<% if @task.users.any? %>
+		 <% @task.users.each do |user| %>
+			#<%= link_to user[:username], user_path(user) %>, 
+			
+			<% end %>
+		<% end %>
+	
+		<br/>
+		<% if ( current_user.admin?) %>
+		<%= link_to "Edit", edit_task_path, class: "btn btn-md btn-primary" %>
+
+		
+		<%= link_to "Delete", task_path(@task), method: :delete,
+																	data: { confirm: "Are you sure you want to delete the task?"}, 														class: "btn btn-md btn-danger" %>
+		<%= link_to "Back", tasks_path, class: "btn btn-md btn-success" %>															
+		<% end %>
+
+		<%= link_to "Back to list task", tasks_path, class: "btn btn-md btn-success" %>
+        </center>
+</div>
+</div>

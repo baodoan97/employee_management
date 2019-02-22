@@ -1,9 +1,11 @@
 @import "bootstrap";
+@import "font-awesome";
 * {
-	margin:0;
-	padding:0;
+margin:0;
+padding:0;
 }
 .background-login{
+
 	background-image: url(bg.jpg);
 	max-width: 100%;
 	height:800px;
@@ -16,24 +18,36 @@
 	margin: auto;
 	margin-top: 250px;
 	border-radius: 15px
+
+background-image: url(bg.jpg);
+width: 100%;
+height:800px;
+background-size:cover;
 }
 
+
+}
 .login > h1 {
-	color: #fff;
-	padding-top: 12px;
+color: #fff;
+padding-top: 12px;
+}
+
+.login > p{
+    color: #fff;    
 }
 
 .input {
-	width:90%;
-	margin:auto;
-	text-align: center;
-	margin-bottom: 3px;
+width:90%;
+margin:auto;
+text-align: center;
+margin-bottom: 3px;
 }
 .form-group{
-	margin-top: 1.5rem;
+margin-top: 1.5rem;
 }@media (min-width: 576px)
 {
 .col-sm-10 {
+
     flex: 0 0 83.3333333333%;
      max-width: 100%;
 }
@@ -41,3 +55,79 @@
 .form-group {
      margin-top: 0rem;
 }
+
+flex: 0 0 83.3333333333%;
+max-width: 100%;
+}
+}
+.form-group {
+margin-top: 0rem;
+}
+img.img {
+height: 9em;
+width: 9em;
+border-radius: 5em;
+}
+.user-actions
+{
+text-align: center;
+}
+form#edit_user_1 {
+    margin-top: 5em;
+}
+
+.image-upload > input
+{
+   display: none;
+}
+.image-upload > label{
+  cursor:pointer;
+}
+i.fa.fa-exchange {
+    position: absolute;
+    top: 25;
+    transform: translate(45%, 0%);
+    top: 23%;
+    /* font-size: smaller; */
+    color: rgba(255, 255, 255, 0.37);
+    /* size: landscape; */
+    font-size: 5em;
+    /* margin: 0 auto; */
+    /* text-shadow: 1px 4px 1px; */
+    height: wi;
+}
+.col-xs-10.col-xs-offset-1 {
+    margin: 0 auto;
+    width: 50%;
+}
+.alert.alert-success {
+    text-align: center;
+}
+img.imgtask {
+    height: 141px;
+    margin: 1px 13px 1px 1px;
+    /* border: 105px black; */
+    width: 1;
+    /* border: 15em black; */
+    border: rgba(0, 0, 0, 0.075);
+    border-style: outset;
+}
+.jumbotron{
+    margin-bottom: 0;
+}
+.login-btn {
+    border-radius: 30px;
+}
+
+.user-bg {
+    margin-top: 100px;
+    background: #f8f9fa;
+    padding: 40px 30px 40px 30px;
+}
+
+.avatar {
+    width:150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
