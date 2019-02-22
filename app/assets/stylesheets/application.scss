@@ -11,12 +11,12 @@ height:800px;
 background-size:cover;
 }
 .login{
-width: 30%;
-background-color: rgba(0,0,0,0.5) !important;
-height: 300px;
-margin: auto;
-margin-top: 250px;
-border-radius: 15px
+  max-width: 500px;
+  	background-color: rgba(0,0,0,0.5) !important;
+  	height: 300px;
+  	margin: auto;
+  	margin-top: 250px;
+  	border-radius: 15px
 }
 .login > h1 {
 color: #fff;
@@ -24,7 +24,7 @@ padding-top: 12px;
 }
 
 .login > p{
-    color: #fff;    
+    color: #fff;
 }
 
 .input {
