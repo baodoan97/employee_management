@@ -22,7 +22,7 @@
 	</div>
 <% end %>
 <div class="form-group">
-	<%= f.date_field :date, class: 'form-control' %>
+	<%= f.date_field :date,value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
 </div>
 <% if @task.new_record? == false %>
 <% end %>

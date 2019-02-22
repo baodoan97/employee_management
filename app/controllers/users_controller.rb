@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-	before_action :set_user, only: [:edit, :update, :show]
-    before_action :require_user
+	before_action :set_user, only: [:edit, :update, :show, :destroy]
+    before_action :require_user, except: [:new, :create]
 	def new
 		@user = User.new
 	end
@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
+			session[:user_id] = @user.id
 			flash[:success] = "Welcome to VINOVA's Employees Management System, #{@user.username}"
 			redirect_to user_path(@user)
 		else
@@ -33,7 +34,14 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-
+		if @user.admin?
+			flash[:danger] = "You can only deletted normal account"
+			redirect_to users_path
+		else
+			@user.destroy
+			flash[:success] = "User was deleted successfully"
+			redirect_to users_path
+		end
 	end
 
 	def show
