@@ -1,3 +1,4 @@
+<div class="container">
 <%= form_for @task , html: { multipart: true } do |f| %>
 <div class="form-group ">
 	<% $s = @task.id  %>
@@ -37,4 +38,6 @@
 	<%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
 	<% end %>
 </div>
+</div>
 <% end %>
+
