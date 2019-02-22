@@ -6,10 +6,25 @@ class TasksController < ApplicationController
 	end
 
 	def create
-		@task = Task.new
-		@task.taskname = task_params[:taskname]
-		@task.content = task_params[:content]
+		paTASK = {
+        	 "taskname" => task_params[:taskname],
+        	 "content" => task_params[:content],
+         }
+		@task = Task.new(paTASK)
+		#tao task = tao usertask
+		
+		# @task.users << @user
+		# @task.taskname = task_params[:taskname]
+		# @task.content = task_params[:content]
         if @task.save
+        	j=1
+        	while (j< task_params[:user_task_ids].count) do
+        		@user = User.find(task_params[:user_task_ids][j].to_i)
+				@user.tasks << @task
+				j += 1
+        	end
+        	
+            	
         	   i = 0
 		       while (i < task_params[:photo].count) do
 		          @image = Image.new
@@ -82,7 +97,7 @@ class TasksController < ApplicationController
 	end
 	private
 	def task_params
-		params.require(:task).permit(:taskname, :content,photo: [])
+		params.require(:task).permit(:taskname, :content,photo: [], user_task_ids: [])
 	end
     
 	def set_task
