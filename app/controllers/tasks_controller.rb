@@ -11,6 +11,7 @@ class TasksController < ApplicationController
 		paTASK = {
         	 "taskname" => task_params[:taskname],
         	 "content" => task_params[:content],
+        	 "date" => task_params[:date]
          }
 		@task = Task.new(paTASK)
 		#tao task = tao usertask
@@ -110,7 +111,7 @@ class TasksController < ApplicationController
 	end
 	private
 	def task_params
-		params.require(:task).permit(:taskname, :content,photo: [], user_task_ids: [])
+		params.require(:task).permit(:taskname, :content, :date, photo: [], user_task_ids: [])
 	end
     
 	def set_task
