@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   delete 'images', to:  'tasks#destroyimage'
+  delete 'taskusers', to:  'tasks#removetaskuser'
 end
