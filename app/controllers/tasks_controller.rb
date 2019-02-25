@@ -107,6 +107,15 @@ class TasksController < ApplicationController
 		redirect_to edit_task_path($s)
 	end
 
+	def removetaskuser
+		
+		@usertask = UserTask.find_by(user_id: params[:user], task_id: params[:task])
+		# debugger
+		@usertask.destroy
+		@task = Task.find(params[:task])
+        redirect_to edit_task_path(@task)
+	end
+
 	def index
 		@task = nil
 		if current_user.admin?
