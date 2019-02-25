@@ -1,7 +1,7 @@
 <h1 class="text-center">
 	<%= form_for(:date,as: :get, url: {action: "index"}, :method => :GET) do |a| %>
 	<%= a.date_field :date,value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
-	<%= a.submit "search", class: "btn btn-lg btn-dark ml-auto" %>
+	<%= a.submit '', class: "btn btn-lg btn-dark ml-auto fa fa-search" %>
 	<% end %>
 </h1>
 
