@@ -1,5 +1,6 @@
 <h1 class="text-center">
 <%= form_tag(tasks_path, :method => "get") do %>
+      <% params[:date] = nil %>
 	   <%= date_field :date, params[:date]%>
 	   <%= submit_tag "Search"%>
 	 <% end %>

@@ -132,7 +132,6 @@ class TasksController < ApplicationController
 				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
 			end
 		end
-
 	end
 
 	def destroy
