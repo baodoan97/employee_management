@@ -80,7 +80,7 @@ i.fa.fa-exchange {
 }
 .col-xs-10.col-xs-offset-1 {
     margin: 0 auto;
-    width: 50%;
+    width: 100%;
 }
 .alert.alert-success {
     text-align: center;
@@ -125,4 +125,12 @@ input#date_date {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.task-form {
+    padding: 100px 50px 20px 100px;
+}
+
+.mar-l{
+    padding-left: 100px;
 }

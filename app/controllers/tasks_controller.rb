@@ -117,11 +117,9 @@ class TasksController < ApplicationController
 	end
 
 	def index
-		@task = nil
 		if current_user.admin?
 			if params[:date]
 				@task = Task.all.where("DATE(date) = ?", params[:date][:date])
-				
 			else
 				@task = Task.all.where("DATE(date) = ?", Date.today)
 			end
