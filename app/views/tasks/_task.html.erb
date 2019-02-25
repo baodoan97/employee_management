@@ -1,4 +1,9 @@
-<h1 class="text-center"><%= Date.today %></h1>
+<h1 class="text-center">
+<%= form_tag(tasks_path, :method => "get") do %>
+	   <%= date_field :date, params[:date]%>
+	   <%= submit_tag "Search"%>
+	 <% end %>
+</h1>
 <div class="container pt-4">
 		<div class="row">
 			<div class="col-12">

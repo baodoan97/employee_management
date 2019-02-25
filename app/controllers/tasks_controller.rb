@@ -108,11 +108,22 @@ class TasksController < ApplicationController
 	end
 
 	def index
+		@task = nil
 		if current_user.admin?
-			@task = Task.all.where("DATE(date) = ?", Date.today)
+			if params[:date]
+				@task = Task.all.where("DATE(date) = ?", params[:date][0])
+				
+			else
+				@task = Task.all.where("DATE(date) = ?", Date.today)
+			end
 		else
-			@task = current_user.tasks.where("DATE(date) = ?", Date.today)
+			if params[:date]
+				@task = current_user.tasks.where("DATE(date) = ?", params(:date))
+			else
+				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
+			end
 		end
+
 	end
 
 	def destroy
