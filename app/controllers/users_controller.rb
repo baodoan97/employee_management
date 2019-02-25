@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: [:edit, :update, :show, :destroy]
     before_action :require_user, except: [:new, :create]
+    before_action :require_same_user, only: [:edit, :update, :destroy]
 	def new
 		@user = User.new
 	end
@@ -56,6 +57,11 @@ class UsersController < ApplicationController
 	def set_user
 		@user = User.find(params[:id])
 	end
-
+	def require_same_user
+			if current_user != @user && !current_user.admin
+				flash[:danger] = "You can only edit or delete your own articles"
+				redirect_to root_path
+			end
+		end
 
 end
