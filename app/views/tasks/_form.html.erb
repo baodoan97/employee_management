@@ -1,64 +1,80 @@
+<% if @task.errors.any? %>
+<div class="alert alert-danger">
+	<ul>
+		<% @task.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 <div class="container">
 	<div class="task-form">
-	<%= form_for @task , html: { multipart: true } do |f| %>
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	    <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
-	  </div>
-	  	<% $s = @task.id  %>
-	  <%= f.text_field :taskname, class: "form-control", placeholder:"Enter name of task"%>
-	</div>
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	    <span class="input-group-text" id="basic-addon1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-	  </div>
-	  <%= f.text_area :content, class: "form-control", placeholder:"Enter description of task"%>
-	</div>
-	<div class="form-group">
-		<%= f.date_field :date,value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
-	</div>
-	<div class="form-group">
-		<%= f.file_field :photo, multiple: true, class: "upload-image" %>
-	</div>
-	<% if current_user.admin? %>
-	<div class="form-group">
-		<%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
-		<% if !@task.users.find_by(username: cb.text) %>
-		<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
-		<% end %>
-		<% end %>
-	</div>
-	<% end %>
-	
-	<%= f.submit class: "btn btn-primary ml-auto" %>
-	<% end %>
-	<div class="form-group">
-	<%= link_to "Back to list tasks", tasks_path, class:"mar-l" %>
-	</div>
-
-	<br/>
-	<% if @task.new_record? == false %>
-	<div class="form-group">
-		Worker: <% @task.users.each do |user| %>
-		
-		<div class='alert alert-removeusetask'>
-			<%= link_to "#{user.username}",user_path(user), class: "btn btn-md btn-danger"
-	    	%>
-	    	<%= link_to "x",taskusers_path(:user => user,:task => @task.id), method: :delete, data: {dismiss: "alert", confirm: "Are you sure you want to delete the user?"},class: "btn btn-md btn-danger"
-	    	 %>
+		<h1 class="text-center">
+		<%= yield(:title) %>
+		</h1>
+		<br/>
+		<%= form_for @task , html: { multipart: true } do |f| %>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+			</div>
+			<% $s = @task.id  %>
+			<%= f.text_field :taskname, class: "form-control", placeholder:"Enter name of task"%>
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="basic-addon1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+			</div>
+			<%= f.text_area :content, class: "form-control", placeholder:"Enter description of task"%>
+		</div>
+		<div class="form-group">
+			<%= f.date_field :date,value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
+		</div>
+		<div class="form-group">
+			<%= f.file_field :photo, multiple: true, class: "upload-image",id: "imagetsask" %>
+		</div>
+		<% if current_user.admin? %>
+		<div class="form-group">
+			<%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
+			<% if !@task.users.find_by(username: cb.text) %>
+			<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
+			<% end %>
+			<% end %>
 		</div>
 		<% end %>
-	</div>
-	<div class="form-group">
-		<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
+		<div class="form-group">
+			<span id="imagetaskss">
+				
+			</span>
+		</div>
+		<%= f.submit class: "btn btn-primary ml-auto" %>
+		<% end %>
+		<div class="form-group">
+			<%= link_to "Back to list tasks", tasks_path, class:"mar-l" %>
+		</div>
+		<br/>
+		<% if @task.new_record? == false %>
+		<div class="form-group">
+			Worker: <% @task.users.each do |user| %>
+			
+			<div class='alert alert-removeusetask'>
+				<%= link_to "#{user.username}",user_path(user), class: "btn btn-md btn-danger"
+				%>
+				<%= link_to "x",taskusers_path(:user => user,:task => @task.id), method: :delete, data: {dismiss: "alert", confirm: "Are you sure you want to delete the user?"},class: "btn btn-md btn-danger"
+				%>
+			</div>
+			<% end %>
+		</div>
+		<div class="form-group">
+			<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
 			<%= hidden_field_tag "task[task_id]", "#{@task.id}" %> <!-- tao paramasters -->
 			<%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
 			<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(checked: false,class: "checkbox")
 			} + image_tag(cb.text.url ,class: "imgtask")%>
 			<% end %>
 			<%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
-		<% end %>
-	</div>
+			<% end %>
+		</div>
 	</div>
 </div>
 <% end %>
