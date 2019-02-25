@@ -127,7 +127,7 @@ class TasksController < ApplicationController
 			end
 		else
 			if params[:date]
-				@task = current_user.tasks.where("DATE(date) = ?", params(:date))
+				@task = current_user.tasks.where("DATE(date) = ?", params[:date][:date])
 			else
 				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
 			end
