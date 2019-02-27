@@ -15,10 +15,13 @@ class TasksController < ApplicationController
          }
 		@task = Task.new(paTASK)
 		#tao task = tao usertask
-		
+	   # if ['image/jpeg', 'jpeg', 'png'].include?(task_params[:photo][1].content_type)
+	   #    flash[:success] = "file type error"
+	   # end
 		# @task.users << @user
 		# @task.taskname = task_params[:taskname]
 		# @task.content = task_params[:content]
+		# debugger
         if @task.save
         	j=1
         	flag = false
@@ -34,7 +37,7 @@ class TasksController < ApplicationController
 					j += 1
 	        	end
         	end
-            	
+            if 	task_params[:photo] != nil
         	   i = 0
 		       while (i < task_params[:photo].count) do
 		          @image = Image.new
@@ -43,6 +46,7 @@ class TasksController < ApplicationController
 				  @image.save
 				  i = i + 1
 		       end
+		    end  
 	        flash[:success] = "Task was created successfully"
 			redirect_to task_path(@task)
 		else

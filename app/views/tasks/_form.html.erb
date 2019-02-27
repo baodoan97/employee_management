@@ -41,38 +41,39 @@
 		<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
 		<% end %>
 		<% end %>
-	</div>
-	<% end %>
-	
-	<%= f.submit class: "btn btn-primary ml-auto" %>
-	<% end %>
-	<div class="form-group">
-	<%= link_to "Back to list tasks", tasks_path, class:"mar-l" %>
-	</div>
-
-	<br/>
-	<% if @task.new_record? == false %>
-	<div class="form-group">
-		Worker: <% @task.users.each do |user| %>
-		
-		<div class='alert alert-removeusetask'>
-			<%= link_to "#{user.username}",user_path(user), class: "btn btn-md btn-danger"
-	    	%>
-	    	<%= link_to "x",taskusers_path(:user => user,:task => @task.id), method: :delete, data: {dismiss: "alert", confirm: "Are you sure you want to delete the user?"},class: "btn btn-md btn-danger"
-	    	 %>
+		<div class="form-group">
+			<span id="imagetaskss">
+				
+			</span>
 		</div>
+		<%= f.submit class: "btn btn-primary ml-auto" %>
 		<% end %>
-	</div>
-	<div class="form-group">
-		<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
+		<div class="form-group">
+			<%= link_to "Back to list tasks", tasks_path, class:"mar-l" %>
+		</div>
+		<br/>
+		<% if @task.new_record? == false %>
+		<div class="form-group">
+			Worker: <% @task.users.each do |user| %>
+			
+			<div class='alert alert-removeusetask'>
+				<%= link_to "#{user.username}",user_path(user), class: "btn btn-md btn-danger"
+				%>
+				<%= link_to "x",taskusers_path(:user => user,:task => @task.id), method: :delete, data: {dismiss: "alert", confirm: "Are you sure you want to delete the user?"},class: "btn btn-md btn-danger"
+				%>
+			</div>
+			<% end %>
+		</div>
+		<div class="form-group">
+			<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
 			<%= hidden_field_tag "task[task_id]", "#{@task.id}" %> <!-- tao paramasters -->
 			<%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
 			<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(checked: false,class: "checkbox")
 			} + image_tag(cb.text.url ,class: "imgtask")%>
 			<% end %>
 			<%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
-		<% end %>
-	</div>
+			<% end %>
+		</div>
 	</div>
 </div>
 <% end %>
