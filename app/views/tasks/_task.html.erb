@@ -14,6 +14,9 @@
 						<th scope="col">Name</th>
 						<th scope="col">Content</th>
 						<th scope="col">Employees</th>
+						<th scope="col">Date</th>
+						<th scope="col">Status</th>
+						<th scope="col">-</th>
 						<th scope="col">-</th>
 						<% if current_user.admin?%>
 						<th scope="col">-</th>
@@ -31,7 +34,29 @@
 							#<%= link_to user[:username], user_path(user) %>  &nbsp
 							<% end %>
 						</td>
+						<td> <%= task.date.strftime("%d / %m / %Y") %> </td>
+						<td>
+							 <% if task.status == "notstarted" %>
+							 	<h5><span class="badge  badge-lg badge-secondary">Not Started</span></h5>
+							 <% elsif task.status == "inprogress" %>
+							 	<h5><span class="badge  badge-lg badge-primary">In Progress</span></h5>
+							 	<% else %>
+							 		<h5><span class="badge  badge-lg badge-success">Done</span></h5>
+							 <% end %> 
+						</td>
 						<td> <%= link_to '', task_path(task), class:"btn btn-success btn-md mr-3 fa fa-eye" %> </td>
+						<td>
+							<% if task.status == "notstarted" %>
+								 <%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+	    						 %>
+							<% elsif task.status == "inprogress" %>
+								<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
+	    						 %>
+							<% else %>
+								<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+								</button>
+							<% end %>
+						</td>
 						<% if current_user.admin?%>
 						<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
 						<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>

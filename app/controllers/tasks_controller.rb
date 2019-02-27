@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 	before_action :set_task, only: [:edit, :update, :show, :destroy]
 	before_action :remove_images_file, only: [:destroy]
 	before_action :require_user
-	before_action :require_admin_user, only: [:edit, :update, :destroy]
+	before_action :require_admin_user, only: [:new, :edit, :update, :destroy]
 	def new
 		@task = Task.new
 	end
@@ -126,21 +126,64 @@ class TasksController < ApplicationController
 		else
 			if params[:date]
 				@task = current_user.tasks.where("DATE(date) = ?", params[:date][:date])
+				@task += Task.includes(:users).where(users: {id:nil})
 			else
 				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
+				@task += Task.includes(:users).where(users: {id:nil})
 			end
 		end
 		# debugger
 	end
 	
 	def destroy
-		@task.destroy
-		flash[:success] = "Task was successfully deletedd"
-		redirect_to tasks_path
+		if @task.status =! "inprogress" || @task.status =! "done"
+			@task.destroy
+			flash[:success] = "Task was successfully deletedd"
+			redirect_to tasks_path
+		else
+			redirect_to tasks_path
+			flash[:danger] = "Cannot delete task inprogress or done"
+
+		end
 	end
+
+	def change_status
+		# if current_user.tasks.inprogress.count < 1
+		#   @task = Task.find(params[:task])
+		#   @task.update(status: params[:status])
+		#     if params[:status] == "inprogress"
+		# 	  @user = current_user
+		# 	  @task.users << @user
+		# 	end
+		#   redirect_to tasks_path
+		#  else
+		#  	redirect_to tasks_path
+		# 	flash[:danger] = "Complete task you were received before!"
+		# end
+
+		if params[:status] == "done"
+			@task = Task.find(params[:task])
+			@task.update(status: params[:status])
+			redirect_to tasks_path
+		elsif params[:status] == "inprogress"
+			if current_user.tasks.inprogress.count < 1
+				@task = Task.find(params[:task])
+				@task.update(status: params[:status])
+				@user = current_user
+				@task.users << @user
+				redirect_to tasks_path
+			else
+				redirect_to tasks_path
+				flash[:danger] = "Complete task you were received before!"
+			end
+		else
+			
+		end
+	end
+
 	private
 	def task_params
-		params.require(:task).permit(:taskname, :content, :date, photo: [], user_task_ids: [])
+		params.require(:task).permit(:taskname, :content, :date, :status, photo: [], user_task_ids: [])
 	end
     
 	def set_task

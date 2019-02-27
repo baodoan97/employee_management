@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_22_070551) do
+ActiveRecord::Schema.define(version: 2019_02_26_073406) do
 
   create_table "images", force: :cascade do |t|
     t.integer "task_id"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_070551) do
     t.string "taskname"
     t.string "content"
     t.date "date"
+    t.integer "status", default: 0, null: false
   end
 
   create_table "user_tasks", force: :cascade do |t|
