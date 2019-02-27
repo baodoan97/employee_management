@@ -1,6 +1,6 @@
 <div class="container">
 		<div class="user-bg text-center">
-			<div align="center" class="avatar m-auto"> <%= image_tag @user.avatar.url ,class: "img" %></div>
+			<div align="center" class="avatar m-auto"> <%= image_tag @user.avatar ,class: "img" %></div>
 			<h2 align="center"> <%= @user.username %></h2>
 			<h2 align="center"> <%= simple_format(@user.email) %></h2>
 				<%= link_to "", users_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>

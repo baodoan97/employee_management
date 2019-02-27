@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
-	has_many  :images
+	# has_many  :images
+	has_many_attached :images
 	has_many :user_tasks
 	has_many :users, through: :user_tasks
 	validates :taskname, presence: true, length: {minimum: 3, maximum: 50}

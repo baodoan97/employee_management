@@ -22,16 +22,16 @@ $( document ).on('turbolinks:load', function() {
 	$('#file-input').trigger('click'); 
 	});
 
-	$('input[type=file]').change(function () {
+	$('#file-input').change(function () {
     // var fileToUpload = $('#file-input').prop('files')[0];
     //  $('#a').attr('src',fileToUpload.name);
     //   console.log(fileToUpload);
      if (this.files && this.files[0]) {
            if( checkTypeimg(this.files[0].type) == false){
-            var input = $('input[type=file]');
-                       input.replaceWith(input.val('').clone(true));
-                     document.getElementById("a").src = "";
-                     alert("only image type jpeg,png");
+            var input = $('#file-input');
+             alert("only image type jpeg,png");
+             input.replaceWith(input.val('').clone(true));
+            document.getElementById("a").src = "";
                   return;
             }
             var reader = new FileReader();

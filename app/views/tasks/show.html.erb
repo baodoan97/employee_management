@@ -2,8 +2,8 @@
 	<div class="row">
 		<div class="col-lg-6 col-md-12 col-sm-12 m-auto">
 			<div align="center">
-				<% @task.images.each do |t| %>
-				<%= image_tag t.pictrue.url ,class: "imgtask" %>
+				<% @task.images.each do |image| %>
+					  <%= image_tag image ,class: "imgtask" %> <br />
 				<% end %>
 			</div>
 			<center class="pt-2">
@@ -15,7 +15,6 @@
 			<% if @task.users.any? %>
 			<% @task.users.each do |user| %>
 			<%= link_to user[:username], user_path(user) %> ·
-			<% end %>
 			<% end %>
 
 		<% end %>
