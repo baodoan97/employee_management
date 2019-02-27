@@ -27,6 +27,13 @@ $( document ).on('turbolinks:load', function() {
     //  $('#a').attr('src',fileToUpload.name);
     //   console.log(fileToUpload);
      if (this.files && this.files[0]) {
+           if( checkTypeimg(this.files[0].type) == false){
+            var input = $('input[type=file]');
+                       input.replaceWith(input.val('').clone(true));
+                     document.getElementById("a").src = "";
+                     alert("only image type jpeg,png");
+                  return;
+            }
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('#a').attr('src', e.target.result);
@@ -49,6 +56,7 @@ $( document ).on('turbolinks:load', function() {
                  if( checkTypeimg(this.files[i].type) == false){
                     var input = $("#imagetsask");
                        input.replaceWith(input.val('').clone(true));
+                       alert("only image type jpeg,png");
                   return;
                   }
         }
