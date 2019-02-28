@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		# @user.images.attach(params[:avatar])
 		if @user.update(user_params)
 			flash[:success] = "Your account was updated successfully"
 			redirect_to user_path(@user)

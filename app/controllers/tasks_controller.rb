@@ -55,7 +55,10 @@ class TasksController < ApplicationController
         	 "content" => task_params[:content],
         	 "date" => task_params[:date]
              }
+            
+             if !!params[:task][:images]
               @task.images.attach(params[:task][:images])
+             end
 		if @task.update(paTASK)   
             j=1
             
