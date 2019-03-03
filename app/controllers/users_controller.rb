@@ -17,6 +17,8 @@ class UsersController < ApplicationController
 		end
 	end
 
+
+
 	def index
     @users = User.all
 	end
@@ -48,6 +50,16 @@ class UsersController < ApplicationController
 
 	def show
 
+	end
+
+	def abc
+		debugger
+         if User.find_by(username: params[:name]) == nil
+           @user = User.new
+           @user.username = params[:name]
+	     else
+	     @user = User.find_by(username: params[:name])
+	      end
 	end
 
 	private

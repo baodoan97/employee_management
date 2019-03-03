@@ -1,0 +1,16 @@
+<%= form_for(comment ,remote: true, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+<div class="form-group">
+   <%= hidden_field_tag "task[task_id]", "#{@task.id}" %> 
+   <%= f.label :content,class: "col-sm-2 control-label" %>
+   <%= f.text_area :content, class: "form-control", placeholder: "comment", autofocus: true , id: "user_comment",rows: "5" %>
+</div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= f.submit "comment", class: "btn btn-default-custom" ,id: "commentbutton" %>
+  </div>
+</div>
+<% end %>
+
+
+
+

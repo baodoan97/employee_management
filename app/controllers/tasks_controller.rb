@@ -6,7 +6,6 @@ class TasksController < ApplicationController
 	def new
 		@task = Task.new
 	end
-
 	def create
 		paTASK = {
         	 "taskname" => task_params[:taskname],

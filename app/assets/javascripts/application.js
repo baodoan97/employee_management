@@ -10,14 +10,32 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery3
+//= require jquery_ujs
+//= require bootstrap-sprockets
 //= require rails-ujs
 //= require activestorage
+//= require bootstrap
 //= require turbolinks
 //= require_tree .
-//= require jquery3
-//= require popper
-//= require bootstrap
 $( document ).on('turbolinks:load', function() {
+//   App.comments.received = function(data)
+// {
+//   alert("x");
+//             // $("#chat").append(data['message'] + "<br>");
+// }
+       // App.comment.received = function(data)
+       //  {
+       //   // alert(comment["avatar"]);
+       //     // $("#abc").append("<p>x</p>");
+       //  }
+          
+   //  $("#commentbutton").click(function(){
+   //       var comment = 1
+   //        // var comment = {"avatar":'<%= url_for(current_user.avatar) %>',"username":"<%= @comment.user.username %>","time":"<%= time_ago_in_words(@comment.created_at) %>","content":"<%= @comment.content %>"};
+   // App.comment.send_comment(comment); 
+   //  })
+
 	$( "#a" ).click(function() {
 	$('#file-input').trigger('click'); 
 	});

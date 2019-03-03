@@ -1,0 +1,11 @@
+<% i = 0 %>
+<%= while i < comments.count do %>
+<div class="media">
+	<%= image_tag User.find(3).avatar,class: "imgcomment align-self-start mr-3" %> <br />
+	<div class="media-body">
+		<h5 class="mt-0"><%= comments[i].user.username %> <small><i><%= time_ago_in_words(comments[i].created_at) %> ago</i></small></h5>
+		<p><%= comments[i].content %></p>
+	</div>
+</div>
+<% i = i + 1 %>
+<% end %>
