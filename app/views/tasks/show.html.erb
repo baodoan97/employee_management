@@ -17,6 +17,7 @@
 			<%= link_to user[:username], user_path(user) %> ·
 			<% end %>
 			<% end %>
+
 			<br/>
 			<% if ( current_user.admin?) %>
 			<%= link_to "", edit_task_path, class: "btn btn-lg btn-primary fa fa-pencil" %>
@@ -38,6 +39,7 @@
 			</center>
 		</div>
 	</div>
+
 </div>
 
 <div class="container">
