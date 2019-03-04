@@ -1,0 +1,24 @@
+// // alert("<%= url_for(current_user.avatar) %>");
+// // alert("x");
+// App.comments.send_comment(comment);
+//  // $("#abc").html("<%= j render 'show', comments: Task.find(1).comments %>");
+// // $("#abc").append("<div class='media'><img src=<%= url_for(current_user.avatar) %> class='imgcomment align-self-start mr-3' /><div class='media-body'> <h5 class='mt-0'><%= @comment.user.username %><small><i><%= time_ago_in_words(@comment.created_at) %> ago</i></small></h5><p><%= @comment.content %></p></div></div>");
+// // $("#abc").html('');
+// // <div class='media'> <br /><div class='media-body'><h5 class='mt-0'><%= @comment.user.username %></h5><p><%= @comment.content %></p></div></div>
+// // <br />
+$( document ).ready(function() {
+// var comment='<%= @comment.user.id %>';
+var comment = {"avatar":'<%= url_for(current_user.avatar) %>',"username":"<%= @comment.user.username %>","time":"<%= time_ago_in_words(@comment.created_at) %>","content":"<%= @comment.content %>"};
+App.comment.send_comment(comment);
+App.comment.received = function(data)
+{
+const keys = Object.values(data);
+if(data != null)
+{
+console.log(keys);
+console.log(keys[0]["message"]["avatar"]);
+}
+$("#abc").append("<div class='media'><img src="+keys[0]["message"]["avatar"]+" class='imgcomment align-self-start mr-3' /> <div class='media-body'> <h5 class='mt-0'> "+keys[0]["message"]["username"]+"<small><i>"+keys[0]["message"]["time"]+" ago</i></small></h5><p>"+keys[0]["message"]["content"]+"</p></div></div>");
+
+}
+})

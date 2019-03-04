@@ -10,28 +10,46 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery3
+//= require jquery_ujs
+//= require bootstrap-sprockets
 //= require rails-ujs
 //= require activestorage
+//= require bootstrap
 //= require turbolinks
 //= require_tree .
-//= require jquery3
-//= require popper
-//= require bootstrap
 $( document ).on('turbolinks:load', function() {
+//   App.comments.received = function(data)
+// {
+//   alert("x");
+//             // $("#chat").append(data['message'] + "<br>");
+// }
+       // App.comment.received = function(data)
+       //  {
+       //   // alert(comment["avatar"]);
+       //     // $("#abc").append("<p>x</p>");
+       //  }
+          
+   //  $("#commentbutton").click(function(){
+   //       var comment = 1
+   //        // var comment = {"avatar":'<%= url_for(current_user.avatar) %>',"username":"<%= @comment.user.username %>","time":"<%= time_ago_in_words(@comment.created_at) %>","content":"<%= @comment.content %>"};
+   // App.comment.send_comment(comment); 
+   //  })
+
 	$( "#a" ).click(function() {
 	$('#file-input').trigger('click'); 
 	});
 
-	$('input[type=file]').change(function () {
+	$('#file-input').change(function () {
     // var fileToUpload = $('#file-input').prop('files')[0];
     //  $('#a').attr('src',fileToUpload.name);
     //   console.log(fileToUpload);
      if (this.files && this.files[0]) {
            if( checkTypeimg(this.files[0].type) == false){
-            var input = $('input[type=file]');
-                       input.replaceWith(input.val('').clone(true));
-                     document.getElementById("a").src = "";
-                     alert("only image type jpeg,png");
+            var input = $('#file-input');
+             alert("only image type jpeg,png");
+             input.replaceWith(input.val('').clone(true));
+            document.getElementById("a").src = "";
                   return;
             }
             var reader = new FileReader();

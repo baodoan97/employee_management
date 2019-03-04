@@ -19,16 +19,24 @@
       </div>
       <center>    
       <div class="image-upload">
+        <% x ="" %>
+        <% if @user.new_record? == false %>
+           <% x = @user.avatar %>
+        <% end %>
+       <% if @user.avatar.attached? == false %>
+           <% x = "" %>
+        <% end %>
         <label for="file-input">
           <div class="changeavt">
           <i class="fa fa-exchange"></i>
-          <%= image_tag @user.avatar.url ,class: "img" ,id: "a"%>
+          <%= image_tag x,class: "img",id: "a" %>
          </div>
         </label>
-        <%= f.file_field :avatar, id:"file-input" %>
+           <%= f.file_field :avatar, id:"file-input" %>
       </div>
       </center>
     </div>
+ 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-o" aria-hidden="true"></i></span>
