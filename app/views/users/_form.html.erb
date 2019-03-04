@@ -23,6 +23,9 @@
         <% if @user.new_record? == false %>
            <% x = @user.avatar %>
         <% end %>
+       <% if @user.avatar.attached? == false %>
+           <% x = "" %>
+        <% end %>
         <label for="file-input">
           <div class="changeavt">
           <i class="fa fa-exchange"></i>

@@ -21,7 +21,9 @@ class TasksController < ApplicationController
 		# @task.taskname = task_params[:taskname]
 		# @task.content = task_params[:content]
 		# debugger
+        if params[:task][:images] != nil 
         @task.images.attach(params[:task][:images])
+        end
         if @task.save
         	j=1
         	flag = false

@@ -3,7 +3,7 @@ class Task < ApplicationRecord
 	has_many_attached :images
 	has_many :user_tasks
 	has_many :users, through: :user_tasks
-	validates :taskname, presence: true, length: {minimum: 3, maximum: 10}
+	validates :taskname, presence: true, length: {minimum: 10, maximum: 300}
 	validates :content, presence: true, length: {minimum: 10, maximum: 300}
 	enum status: {
 		notstarted: 0,

@@ -1,17 +1,19 @@
 <div class="container">
-		<div class="user-bg text-center">
-			<div align="center" class="avatar m-auto"> <%= image_tag @user.avatar ,class: "img" %></div>
-			<h2 align="center"> <%= @user.username %></h2>
-			<h2 align="center"> <%= simple_format(@user.email) %></h2>
-				<%= link_to "", users_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>
-				<%= link_to "", edit_user_path(@user), class: "btn btn-lg btn-primary fa fa-pencil" %>
-
-				<% if current_user.admin? %>
-				<%= link_to "", user_path(@user), method: :delete,
-					data: { confirm: "Are you sure you want to delete the user?"},
-					class: "btn btn-lg btn-danger fa fa-trash" %>
-				<% end %>
-
-		</div>
-
+	<div class="user-bg text-center">
+		<% if @user.avatar.attached? == false  %>
+			<div align="center" class="avatar m-auto"> <%= image_tag "",class: "img" %></div>
+		<% else %>
+		   <div align="center" class="avatar m-auto"> <%= image_tag @user.avatar,class: "img" %></div>
+		<% end %>
+		
+		<h2 align="center"> <%= @user.username %></h2>
+		<h2 align="center"> <%= simple_format(@user.email) %></h2>
+		<%= link_to "", users_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>
+		<%= link_to "", edit_user_path(@user), class: "btn btn-lg btn-primary fa fa-pencil" %>
+		<% if current_user.admin? %>
+		<%= link_to "", user_path(@user), method: :delete,
+		data: { confirm: "Are you sure you want to delete the user?"},
+		class: "btn btn-lg btn-danger fa fa-trash" %>
+		<% end %>
 	</div>
+</div>
