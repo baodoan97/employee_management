@@ -1,0 +1,76 @@
+<% if current_user.admin?%>
+<%= render 'top' %>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <b>Databoard Control</b>
+      </li>
+    </ol>
+<div class="row">
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-user"></i>
+                </div>
+                <div class="mr-5 "style ="text-align:center">
+                  <b >Total Account : <span style="color:black;font-size:2rem">
+                    <% @user = User.all.count %>
+                    <%= @user %>  </span>
+                  </b>
+                </div>
+              </div>
+            	<%= link_to " Views Details", admins_user_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-warning o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-table"></i>
+                </div>
+                <div class="mr-5 "style ="text-align:center">
+                  <b >Total Tasks : <span style="color:black;font-size:2rem">
+                    <% @task = Task.all.count %>
+                    <%= @task %>  </span>
+                  </b>
+                </div>
+              </div>
+              	<%= link_to " View Details", admins_table_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-shopping-cart"></i>
+                </div>
+                <div class="mr-5 "style ="text-align:center">
+                  <b >Task Success : <span style="color:black;font-size:2rem">
+                    <% @task = Task.all.count %>
+                    <%= @task %>  </span>
+                  </b>
+                </div>
+              </div>
+              	<%= link_to " View Details", admins_index_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-life-ring"></i>
+                </div>
+                <div class="mr-5 "style ="text-align:center">
+                  <b >Task Witing : <span style="color:black;font-size:2rem">
+                    <% @task = Task.all.count %>
+                    <%= @task %>  </span>
+                  </b>
+                </div>
+              </div>
+                <%= link_to " View Details", admins_index_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+            </div>
+          </div>
+        </div>
+        <%= render 'foot' %>
+      <% end %>

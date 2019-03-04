@@ -8,7 +8,12 @@ class ApplicationController < ActionController::Base
 	def logged_in?
 		!!current_user
 	end
-
+	def require_admin
+		if !logged_in?
+			flash[:danger] ="Liên kết của bạn không tồn tại"
+			redirect_to error_oop_path
+		end
+	end
 	def require_user
 		if !logged_in?
 			flash[:danger] ="You must be logged in to perform that action"

@@ -1,0 +1,64 @@
+  <%= @userr = User.new   %>
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12 m-auto">
+    <h1 class="text-center">
+      <%= yield(:title) %>
+    </h1>
+    <br/>
+    <% if @userr.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @userr.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+    <%= form_for @userr do |f| %>
+    <div class="form-group ">
+      <div align="center">
+      </div>
+      <center>
+      <div class="image-upload">
+        <label for="file-input">
+          <div class="changeavt">
+          <i class="fa fa-exchange"></i>
+          <%= image_tag @userr.avatar.url ,class: "img" ,id: "a"%>
+         </div>
+        </label>
+        <%= f.file_field :avatar, id:"file-input" %>
+      </div>
+      </center>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+      </div>
+      <%= f.text_field :username, class: "form-control", placeholder:"Enter username"%>
+    </div>
+    <% if @userr.new_record? == true %>
+     <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+      </div>
+      <%= f.text_field :email, class: "form-control", placeholder:"Enter email"%>
+    </div>
+    <% end %>
+   <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fa fa-key" aria-hidden="true"></i></span>
+      </div>
+      <%= f.text_field :password, class: "form-control", placeholder:"Enter password", type: "password" %>
+    </div>
+    <div class="field">
+    <%= f.radio_button :admin, true %> True
+    <%= f.radio_button :admin, false %> False
+  </div>
+    <div class="form-group ">
+      <div align="center">
+        <%= f.submit "Dang ki", class:"btn btn-lg btn-dark ml-auto" %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
