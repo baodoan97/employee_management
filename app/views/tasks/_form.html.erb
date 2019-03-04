@@ -13,48 +13,54 @@
 	      <%= yield(:title) %>
 	    </h1> 
 		<%= form_for @task , html: { multipart: true } do |f| %>
-		<div class="input-group mb-3">
+		<div class="input-group input-group-lg mb-4">
 			<div class="input-group-prepend">
-				<span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+				<span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
 			</div>
 			<% $s = @task.id  %>
 			<%= f.text_field :taskname, class: "form-control", placeholder:"Enter name of task"%>
 		</div>
-		<div class="input-group mb-3">
+		<div class="input-group input-group-lg mb-4">
 			<div class="input-group-prepend">
-				<span class="input-group-text" id="basic-addon1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+				<span class="input-group-text""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
 			</div>
 			<%= f.text_area :content, class: "form-control", placeholder:"Enter description of task"%>
 		</div>
-		<div class="form-group">
+		<div class="input-group input-group-lg mb-4">
+			<div class="input-group-prepend">
+				<span class="input-group-text""><i class="fa fa-tasks" aria-hidden="true"></i></span>
+			</div>
 			<%= f.select :level, options_for_select(Task.levels, @task.level), {}, { :class => "form-control" } %>
 		</div>
-		<div class="form-group">
+		<div class="input-group input-group-lg mb-4">
+			<div class="input-group-prepend">
+				<span class="input-group-text""><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+			</div>
 			<%= f.date_field :date,value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
 		</div>
-		<div class="form-group">
-			<%= f.file_field :images, multiple: true, class: "upload-image" ,id: "imagetsask" %>
+		<div class="input-group input-group-lg mb-4">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text"><i class="fa fa-picture-o"></i></span>
+		  </div>
+		  <div class="custom-file">
+		  	<%= f.file_field :images, multiple: true, class: "custom-file-input" ,id: "imagetsask" %>
+    		<label class="custom-file-label" for="imagetsask">Choose file</label>
+		  </div>
 		</div>
 		<div class="form-group">
-			<span id="imagetaskss">
-				
-			</span>
+			<span id="imagetaskss"></span>
 		</div>
 		<% if current_user.admin? %>
 		<div class="form-group">
 			<%= f.collection_check_boxes :user_task_ids, User.all, :id, :username do |cb| %>
-			<% if !@task.users.find_by(username: cb.text) %>
-			<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
+				<% if !@task.users.find_by(username: cb.text) %>
+				<% cb.label(class: "checkbox-inline input_checkbox mr-3") {cb.check_box(class: "checkbox mr-1") + cb.text} %>
+				<% end %>
 			<% end %>
-			<% end %>
-			
 		</div>
 		<% end %>
-		<%= f.submit class: "btn btn-primary ml-auto" %>
+		<%= f.submit class: "btn btn-lg btn-primary ml-auto btn-user" %>
 		<% end %>
-		<div class="form-group">
-			<%= link_to "Back to list tasks", tasks_path, class:"mar-l" %>
-		</div>
 		<br/>
 		<% if @task.new_record? == false %>
 		<div class="form-group">

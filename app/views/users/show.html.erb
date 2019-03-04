@@ -1,19 +1,36 @@
-<div class="container">
-	<div class="user-bg text-center">
-		<% if @user.avatar.attached? == false  %>
-			<div align="center" class="avatar m-auto"> <%= image_tag "",class: "img" %></div>
-		<% else %>
-		   <div align="center" class="avatar m-auto"> <%= image_tag @user.avatar,class: "img" %></div>
-		<% end %>
-		
-		<h2 align="center"> <%= @user.username %></h2>
-		<h2 align="center"> <%= simple_format(@user.email) %></h2>
-		<%= link_to "", users_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>
-		<%= link_to "", edit_user_path(@user), class: "btn btn-lg btn-primary fa fa-pencil" %>
-		<% if current_user.admin? %>
-		<%= link_to "", user_path(@user), method: :delete,
-		data: { confirm: "Are you sure you want to delete the user?"},
-		class: "btn btn-lg btn-danger fa fa-trash" %>
-		<% end %>
+<div class="container mt-5 pt-3">    
+    <div class="row">
+        <div class="card">
+     	    <div class="card-header">  <h4 >User Profile</h4></div>
+            <div class="card-body">
+            	<div class="row">
+	    		    <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
+	     			     <%= image_tag @user.avatar.attached? == false ? " ": @user.avatar,class: "rounded-circle img-thumbnail" %>
+	 				</div>
+			   	    <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
+			            <div class="container" >
+			         	    <h2><%= @user.username %></h2>
+			           	    <p>an   <b> Rails Web Developer</b></p>
+			            </div>
+			            <hr>
+			            <ul class="container details" >
+			                <li><p><span class="fa fa-user one" style="width:50px;"></span><%= @user.username %></p></li>
+			                <li><p><span class="fa fa-envelope one" style="width:50px;"></span><%= @user.email %></p></li>
+			            </ul>
+			            <hr>
+			       	    <div class="col-sm-5 col-xs-6 tital " >
+			   				<%= link_to "", users_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>
+							<%= link_to "", edit_user_path(@user), class: "btn btn-lg btn-primary fa fa-pencil" %>
+							<% if current_user.admin? %>
+								<%= link_to "", user_path(@user), method: :delete,
+								data: { confirm: "Are you sure you want to delete the user?"},
+								class: "btn btn-lg btn-danger fa fa-trash" %>
+							<% end %>
+			       	    </div>
+			        </div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
