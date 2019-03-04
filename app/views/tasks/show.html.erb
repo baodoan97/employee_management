@@ -2,8 +2,8 @@
 	<div class="row">
 		<div class="col-lg-6 col-md-12 col-sm-12 m-auto">
 			<div align="center">
-				<% @task.images.each do |t| %>
-				<%= image_tag t.pictrue.url ,class: "imgtask" %>
+				<% @task.images.each do |image| %>
+				<%= image_tag image ,class: "imgtask" %> <br />
 				<% end %>
 			</div>
 			<center class="pt-2">
@@ -18,33 +18,33 @@
 			<% end %>
 			<% end %>
 
-		<% end %>
-		<br/>
-		<% if ( current_user.admin?) %>
-
-		<%= link_to "", edit_task_path, class: "btn btn-lg btn-primary fa fa-pencil" %>
-
-
-
-		<%= link_to "", task_path(@task), method: :delete,
-																	data: { confirm: "Are you sure you want to delete the task?"}, 														class: "btn btn-lg btn-danger fa fa-trash" %>
-		<%= link_to "", tasks_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>															
-		<% end %>
-
+			<br/>
+			<% if ( current_user.admin?) %>
+			<%= link_to "", edit_task_path, class: "btn btn-lg btn-primary fa fa-pencil" %>
+			<%= link_to "", task_path(@task), method: :delete,
+			data: { confirm: "Are you sure you want to delete the task?"}, 														class: "btn btn-lg btn-danger fa fa-trash" %>
+			<%= link_to "", tasks_path, class: "btn btn-lg btn-success fa fa-arrow-circle-left" %>
+			<% end %>
 			<% if @task.status == "notstarted" %>
-								 <%= link_to "", change_status_path(:task => @task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
-	    						 %>
-							<% elsif @task.status == "inprogress" %>
-								<%= link_to "", change_status_path(:task => @task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
-	    						 %>
-							<% else %>
-								<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
-								</button>
-							<% end %>
-	
+			<%= link_to "", change_status_path(:task => @task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+			%>
+			<% elsif @task.status == "inprogress" %>
+			<%= link_to "", change_status_path(:task => @task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
+			%>
+			<% else %>
+			<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+			</button>
+			<% end %>
+			
+			</center>
+		</div>
+	</div>
 
-        </center>
 </div>
+
+<div class="container">
+		<%= render 'comments/new' , task_id: @task.id %>
 </div>
-</div>
+
+
 

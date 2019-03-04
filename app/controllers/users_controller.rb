@@ -17,6 +17,8 @@ class UsersController < ApplicationController
 		end
 	end
 
+
+
 	def index
     @users = User.all.where(admin: nil)
 		@user = User.order(:username)
@@ -33,6 +35,7 @@ class UsersController < ApplicationController
 
 	end
 	def update
+		# @user.images.attach(params[:avatar])
 		if @user.update(user_params)
 			flash[:success] = "Your account was updated successfully"
 			if current_user.admin?
@@ -57,6 +60,16 @@ class UsersController < ApplicationController
 
 	def show
 
+	end
+
+	def abc
+		debugger
+         if User.find_by(username: params[:name]) == nil
+           @user = User.new
+           @user.username = params[:name]
+	     else
+	     @user = User.find_by(username: params[:name])
+	      end
 	end
 
 	private

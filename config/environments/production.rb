@@ -91,4 +91,22 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+
+config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }    
+config.action_mailer.raise_delivery_errors = false
+config.action_mailer.delivery_method = :smtp
+
+# this line is what you want to be true, else you won't get messages!
+config.action_mailer.perform_deliveries = true 
+
+config.action_mailer.smtp_settings = {
+  address: "smtp.gmail.com",
+  port: 587,
+  domain: 'gmail.com' # or to whatever domain your email is
+  authentication: "plain",
+  enable_starttls_auto: true,
+  user_name: 'mr.cupo97@gmail.com',
+  password: '........'
+}
 end
