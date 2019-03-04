@@ -20,18 +20,28 @@ class UsersController < ApplicationController
 
 
 	def index
-    @users = User.all
+    @users = User.all.where(admin: nil)
+		@user = User.order(:username)
+			respond_to do |format|
+				format.html
+				format.csv {send_data @users.to_csv,filename: "users-#{Date.today}.csv"}
+				format.xls {send_data @users.to_csv,filename: "users-#{Date.today}.xls"}
+			end
 	end
-
+	def report
+		@users = User.all
+	end
 	def edit
 
 	end
-
 	def update
 		# @user.images.attach(params[:avatar])
 		if @user.update(user_params)
 			flash[:success] = "Your account was updated successfully"
-			redirect_to user_path(@user)
+			if current_user.admin?
+					redirect_to admins_user_path(@user)
+				else redirect_to user_path(@user)
+				end
 		else
 			render 'edit'
 		end

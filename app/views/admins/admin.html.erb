@@ -1,0 +1,78 @@
+<% if current_user.admin?%>
+<%= render 'top' %>
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+           <%= link_to ' Home', admins_index_path() %>
+        </li>
+        <li class="breadcrumb-item active">List Task</li>
+      </ol>
+      <h6>Export List of Users</h6>
+      <div class="pb-4">
+  <%= link_to "CSV", admins_index_path(format: "csv"),type: "button",class:"btn btn-outline-success" %>
+  <%= link_to "Excel", admins_index_path(format: "xls"),type: "button",class:"btn btn-outline-primary" %>
+  <br/>
+  </div>
+      <!-- DataTables Example -->
+      <div class="card mb-3 ">
+        <div class="card-header">
+          <i class="fa fa-table"></i>
+        List User</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="margin: 0 auto">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Password</th>
+                  <th scope="col">Avatar</th>
+                  <th scope="col">Admin</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+                   <% @user = User.all %>
+
+                  <% @user.each do |user| %>
+                    <% if user.admin? %>
+              <tbody>
+                <tr>
+                  <td scope="row"><%= user.id %></td>
+                  <td><%= user.username %></td>
+                  <td><%= user.email %></td>
+                  <td><%= truncate(user.password_digest, length: 20) %></td>
+                  <td><%= image_tag user.avatar.url ,class: "img" ,id: "a"%></td>
+
+                 <% if user.admin? %>
+                    <td>true</td>
+                 <% else %>
+                    <td>fasle</td>
+                 <% end %>
+                 <% if current_user.admin?%>
+                 <td> <%= link_to '', edit_admin_path(user), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
+                 <td> <%= link_to '', user_path(user), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
+                 <% end %>
+                </tr>
+              </tbody>
+                  <% end %>
+                <% end %>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">
+
+          Updated:  <%= now = DateTime.now%>
+      </div>
+
+      <p class="small text-center text-muted my-5">
+        <em>More table examples coming soon...</em>
+      </p>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+  <%= render 'foot' %>
+<% end %>
