@@ -6,7 +6,6 @@ class TasksController < ApplicationController
 	def new
 		@task = Task.new
 	end
-
 	def create
 		paTASK = {
         	 "taskname" => task_params[:taskname],
@@ -15,7 +14,11 @@ class TasksController < ApplicationController
         	 "level" => task_params[:level].to_i
          }
 		@task = Task.new(paTASK)
-	
+
+        if params[:task][:images] != nil 
+        @task.images.attach(params[:task][:images])
+        end
+
         if @task.save
         	j=1
         	flag = false
@@ -31,16 +34,6 @@ class TasksController < ApplicationController
 					j += 1
 	        	end
         	end
-            if 	task_params[:photo] != nil
-        	   i = 0
-		       while (i < task_params[:photo].count) do
-		          @image = Image.new
-				  @image.task = @task
-				  @image.pictrue = task_params[:photo][i]
-				  @image.save
-				  i = i + 1
-		       end
-		    end  
 	        flash[:success] = "Task was created successfully"
 	 		TaskMailer.new_task(@user).deliver_now
 
@@ -62,6 +55,10 @@ class TasksController < ApplicationController
         	 "date" => task_params[:date],
         	 "level" => task_params[:level].to_i
              }
+            
+             if !!params[:task][:images]
+              @task.images.attach(params[:task][:images])
+             end
 		if @task.update(paTASK)   
             j=1
             
@@ -72,17 +69,7 @@ class TasksController < ApplicationController
 					j += 1
 	        	end
            
-            
-			if task_params[:photo] != nil
-			 i = 0
-		       while (i < task_params[:photo].count) do
-		          @image = Image.new
-				  @image.task = @task
-				  @image.pictrue = task_params[:photo][i]
-				  @image.save
-				  i = i + 1
-		       end
-		    end   	
+            	
 			flash[:success] = "Task was updated"
 			redirect_to task_path(@task)
 		else
@@ -95,18 +82,13 @@ class TasksController < ApplicationController
 	end
 
 	def destroyimage
-		i = 0
-		while i < params[:delete][:image_ids].count do
-			begin  
-             u = Image.find(params[:delete][:image_ids][i].to_i)
-             u.destroy
-            rescue 
-
-            end  
-             i = i + 1  
-		end
-		# @task = Task.find(params[:task][:task_id][0].to_i)
-		redirect_to edit_task_path($s)
+		
+		   if params[:task] 
+            @task = Task.find(params[:task])
+             @task.images[params[:images].to_i].destroy
+		   end
+		   redirect_to edit_task_path($s)
+		
 	end
 
 	def removetaskuser

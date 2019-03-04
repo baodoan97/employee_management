@@ -33,7 +33,7 @@
 			<%= f.date_field :date,value: Time.now.strftime("%Y-%m-%d"), class: 'form-control' %>
 		</div>
 		<div class="form-group">
-			<%= f.file_field :photo, multiple: true, class: "upload-image" ,id: "imagetsask" %>
+			<%= f.file_field :images, multiple: true, class: "upload-image" ,id: "imagetsask" %>
 		</div>
 		<div class="form-group">
 			<span id="imagetaskss">
@@ -68,13 +68,13 @@
 			<% end %>
 		</div>
 		<div class="form-group">
-			<%= form_for(@task,as: :delete, url: {action: "destroyimage"}, :method => :DELETE) do |a| %>
-			<%= hidden_field_tag "task[task_id]", "#{@task.id}" %> <!-- tao paramasters -->
-			<%= a.collection_check_boxes :image_ids, @task.images, :id, :pictrue do |cb| %>
-			<% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(checked: false,class: "checkbox")
-			} + image_tag(cb.text.url ,class: "imgtask")%>
-			<% end %>
-			<%= a.submit "Delete", class: "btn btn-dark ml-auto" %>
+			<% i = 0 %>
+			<% @task.images.each do |image| %>
+			<%= image_tag image ,class: "imgtask" %>
+			<%= link_to "x",images_path(:task => @task.id,:images => i), method: :delete, data: {dismiss: "alert", confirm: "Are you sure you want to delete the user?"},class: "btn btn-md btn-danger"
+			%>
+			<% i = i + 1 %>
+		    </br>
 			<% end %>
 		</div>
 		<% end %>
