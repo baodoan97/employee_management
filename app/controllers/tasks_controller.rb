@@ -11,17 +11,11 @@ class TasksController < ApplicationController
 		paTASK = {
         	 "taskname" => task_params[:taskname],
         	 "content" => task_params[:content],
-        	 "date" => task_params[:date]
+        	 "date" => task_params[:date],
+        	 "level" => task_params[:level].to_i
          }
 		@task = Task.new(paTASK)
-		#tao task = tao usertask
-	   # if ['image/jpeg', 'jpeg', 'png'].include?(task_params[:photo][1].content_type)
-	   #    flash[:success] = "file type error"
-	   # end
-		# @task.users << @user
-		# @task.taskname = task_params[:taskname]
-		# @task.content = task_params[:content]
-		# debugger
+	
         if @task.save
         	j=1
         	flag = false
@@ -48,7 +42,10 @@ class TasksController < ApplicationController
 		       end
 		    end  
 	        flash[:success] = "Task was created successfully"
+	 		TaskMailer.new_task(@user).deliver_now
+
 			redirect_to task_path(@task)
+			# debugger
 		else
 			render 'new'
 		end
@@ -62,7 +59,8 @@ class TasksController < ApplicationController
         paTASK = {
         	 "taskname" => task_params[:taskname],
         	 "content" => task_params[:content],
-        	 "date" => task_params[:date]
+        	 "date" => task_params[:date],
+        	 "level" => task_params[:level].to_i
              }
 		if @task.update(paTASK)   
             j=1
@@ -130,17 +128,19 @@ class TasksController < ApplicationController
 		else
 			if params[:date]
 				@task = current_user.tasks.where("DATE(date) = ?", params[:date][:date])
-				@task += Task.includes(:users).where(users: {id:nil})
+				@task += Task.includes(:users).where(users: {id:nil}, tasks: {date: params[:date][:date]})
+				@task += Task.joins(:users).where(tasks: {private: 'false', date: params[:date][:date]}).where.not(users: {id: current_user.id})	
 			else
 				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
-				@task += Task.includes(:users).where(users: {id:nil})
+				@task += Task.includes(:users).where(users: {id:nil}, tasks: {date: Date.today})
+				@task += Task.joins(:users).where(tasks: {private: 'false', date: Date.today}).where.not(users: {id: current_user.id})
 			end
 		end
-		# debugger
+	
 	end
 	
 	def destroy
-		if @task.status =! "inprogress" || @task.status =! "done"
+		if @task.status == "notstarted"
 			@task.destroy
 			flash[:success] = "Task was successfully deletedd"
 			redirect_to tasks_path
@@ -152,19 +152,6 @@ class TasksController < ApplicationController
 	end
 
 	def change_status
-		# if current_user.tasks.inprogress.count < 1
-		#   @task = Task.find(params[:task])
-		#   @task.update(status: params[:status])
-		#     if params[:status] == "inprogress"
-		# 	  @user = current_user
-		# 	  @task.users << @user
-		# 	end
-		#   redirect_to tasks_path
-		#  else
-		#  	redirect_to tasks_path
-		# 	flash[:danger] = "Complete task you were received before!"
-		# end
-
 		if params[:status] == "done"
 			@task = Task.find(params[:task])
 			@task.update(status: params[:status])
@@ -174,7 +161,9 @@ class TasksController < ApplicationController
 				@task = Task.find(params[:task])
 				@task.update(status: params[:status])
 				@user = current_user
-				@task.users << @user
+				if @task.users != nil
+					@task.users << @user
+				end
 				redirect_to tasks_path
 			else
 				redirect_to tasks_path
@@ -183,11 +172,21 @@ class TasksController < ApplicationController
 		else
 			
 		end
+
+	end
+
+	def change_private
+		if params[:private]
+			@task = Task.find(params[:task])
+			@task.update(private: params[:private])
+			redirect_to tasks_path
+		end
+
 	end
 
 	private
 	def task_params
-		params.require(:task).permit(:taskname, :content, :date, :status, photo: [], user_task_ids: [])
+		params.require(:task).permit(:taskname, :content, :date, :status, :level, :private, photo: [], user_task_ids: [])
 	end
     
 	def set_task

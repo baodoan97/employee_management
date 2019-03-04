@@ -9,4 +9,11 @@ class Task < ApplicationRecord
 		inprogress: 1,
 		done: 2
 	}
+
+	enum level: {
+		low: 0,
+		normal: 1,
+		high: 2,
+		highest: 3
+	}
 end

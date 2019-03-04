@@ -13,23 +13,36 @@
 						<th scope="col">#</th>
 						<th scope="col">Name</th>
 						<th scope="col">Content</th>
+						<th scope="col">Priority</th>
 						<th scope="col">Employees</th>
 						<th scope="col">Date</th>
 						<th scope="col">Status</th>
-						<th scope="col">-</th>
 						<th scope="col">-</th>
 						<% if current_user.admin?%>
 						<th scope="col">-</th>
 						<th scope="col">-</th>
 						<% end %>
+						<th scope="col">-</th>
+						<th scope="col">-</th>
 					</tr>
 				</thead>
 				<% obj.each do |task| %>
 				<tbody>
 					<tr>
 						<th scope="row"><%= task.id %></th>
-						<td><%= truncate(task.taskname, length: 20) %></td>
-						<td><%= truncate(task.content, length: 20) %></td>
+						<td><%= truncate(task.taskname, length: 15) %></td>
+						<td><%= truncate(task.content, length: 15) %></td>
+						<td>
+							<% if task.level == "low" %>
+								<h5><span class="badge  badge-lg badge-secondary"><%= task.level.upcase %></span></h5>
+							<% elsif  task.level == "normal" %>
+								<h5><span class="badge  badge-lg badge-primary"><%= task.level.upcase %></span></h5>
+								<% elsif task.level == "high" %>
+									<h5><span class="badge  badge-lg badge-warning"><%= task.level.upcase %></span></h5>
+								<% elsif task.level == "highest" %>
+									<h5><span class="badge  badge-lg badge-danger"><%= task.level.upcase %></span></h5>
+							<% end %>
+						</td>
 						<td><% task.users.each do |user| %>
 							#<%= link_to user[:username], user_path(user) %>  &nbsp
 							<% end %>
@@ -45,25 +58,48 @@
 							 <% end %> 
 						</td>
 						<td> <%= link_to '', task_path(task), class:"btn btn-success btn-md mr-3 fa fa-eye" %> </td>
-						<td>
-							<% if task.status == "notstarted" %>
-								 <%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
-	    						 %>
-							<% elsif task.status == "inprogress" %>
-								<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
-	    						 %>
-							<% else %>
-								<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
-								</button>
-							<% end %>
-						</td>
+						
 						<% if current_user.admin?%>
 						<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
 						<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
 						<% end %>
+						<td>
+							
+								<% if task.status == "notstarted" %>
+									<% if  task.users.find_by(id: current_user.id) || task.users.count == 0 %>
+									 <%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+		    						 %>
+		    						 <% else %>
+		    						 <button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+										</button>
+		    						 <% end %>
+								<% else %>
+									<% if task.status == "inprogress" %>
+									<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
+		    						 %>
+									<% else %>
+										<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+										</button>
+									<% end %>
+								<% end %>
+							
+						
+						</td>
+						<td>
+							<% if task.users.find_by(id: current_user.id) %>
+								<% if task.private == true %>
+									<%= link_to "", change_private_path(:task => task, :private => "false"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-off" %>
+			    				<% else %>
+			    					<%= link_to "", change_private_path(:task => task, :private => "true"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-on" %>
+			    				<% end %>
+	    					<% else %>
+	    						<button type="button" class="btn btn-primary" disabled><span class="fa fa-toggle-off"></span>
+								</button>
+							<% end %>
+						</td>
 					</tr>
 				</tbody>
-				<% end %>
+				<% end %>1
 			</table>
 		</div>
 	</div>

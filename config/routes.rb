@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   delete 'images', to:  'tasks#destroyimage'
   delete 'taskusers', to:  'tasks#removetaskuser'
   put 'change_status', to: 'tasks#change_status'
+  put 'change_private', to: 'tasks#change_private'
 end
