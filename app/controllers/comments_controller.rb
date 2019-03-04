@@ -11,7 +11,10 @@ class CommentsController < ApplicationController
 	       @task = Task.find(params[:task][:task_id])
 	       @task.comments << @comment
 	       @task.save
-
+	       respond_to do |format|
+	       	format.html 
+	       	format.js
+	       end
 	       # debugger
 	       # respond_to(:js)
 	end

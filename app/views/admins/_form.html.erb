@@ -14,7 +14,14 @@
         <label for="file-input">
           <div class="changeavt">
           <i class="fa fa-exchange"></i>
-          <%= image_tag @user.avatar.url ,class: "img" ,id: "a"%>
+          <% x ="" %>
+        <% if @user.new_record? == false %>
+           <% x = @user.avatar %>
+        <% end %>
+       <% if @user.avatar.attached? == false %>
+           <% x = "" %>
+        <% end %>
+          <%= image_tag x,class: "img",id: "a" %>
          </div>
         </label>
         <%= f.file_field :avatar, id:"file-input" %>

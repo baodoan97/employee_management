@@ -11,10 +11,10 @@ class SessionsController < ApplicationController
 			session[:user_id] = user.id
 			flash[:success] = "You have successfully logged in"
 				if user.admin?
-						redirect_to admins_index_path()
-				else 	redirect_to user_path(user)
+					redirect_to admins_index_path()
+				else 	
+					redirect_to user_path(user)
 				end
-
 			else
 			flash.now[:danger] = "There was something wrong with your login information"
 			render 'new'
@@ -28,5 +28,5 @@ class SessionsController < ApplicationController
 		redirect_to root_path
 	end
 
-
+	
 end

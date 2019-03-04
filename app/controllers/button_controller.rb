@@ -1,3 +1,0 @@
-class ButtonController < ApplicationController
-
-end

@@ -13,7 +13,7 @@ length: {maximum: 105},
 uniqueness: true,
 format: {with: VALID_EMAIL_REGEX }
 has_secure_password
-
+has_many :comments
 
  def self.to_csv
    attributes = %w{ id username email avatar password_digest admin }
@@ -26,7 +26,4 @@ CSV.generate(headers: true) do |csv|
   end
 end
 
-has_many :comments
-
-end
 

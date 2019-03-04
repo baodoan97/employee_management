@@ -35,8 +35,9 @@ class TasksController < ApplicationController
 	        	end
         	end
 	        flash[:success] = "Task was created successfully"
-	 		TaskMailer.new_task(@user).deliver_now
-
+	        if task_params[:user_task_ids]
+	 			TaskMailer.new_task(@user).deliver_now
+	 		end
 			redirect_to task_path(@task)
 			# debugger
 		else

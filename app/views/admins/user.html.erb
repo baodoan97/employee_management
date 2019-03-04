@@ -9,8 +9,8 @@
         </ol>
         <h6>Export List of Users</h6>
         <div class="pb-4">
-    <%= link_to "CSV", users_path(format: "csv"),type: "button",class:"btn btn-outline-success" %>
-    <%= link_to "Excel", users_path(format: "xls"),type: "button",class:"btn btn-outline-primary" %>
+    <%= link_to "CSV", users_render_path(format: "csv"),type: "button",class:"btn btn-outline-success" %>
+    <%= link_to "Excel", users_render_path(format: "xls"),type: "button",class:"btn btn-outline-primary" %>
     <br/>
     </div>
         <!-- DataTables Example -->
@@ -42,7 +42,11 @@
                     <td><%= user.username %></td>
                 	  <td><%= user.email %></td>
                   	<td><%= truncate(user.password_digest, length: 20) %></td>
-                    <td><%= image_tag user.avatar.url ,class: "img" ,id: "a"%></td>
+                    <% if user.avatar.attached? == true %>
+                    <td><%= image_tag user.avatar ,class: "img" ,id: "a"%></td>
+                    <% else %>
+                     <td> <img src="#" class="img" ></td>
+                    <% end %>
 
                    <% if user.admin? %>
                       <td>true</td>

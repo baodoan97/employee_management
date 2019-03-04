@@ -43,7 +43,11 @@
                   <td><%= user.username %></td>
                   <td><%= user.email %></td>
                   <td><%= truncate(user.password_digest, length: 20) %></td>
-                  <td><%= image_tag user.avatar.url ,class: "img" ,id: "a"%></td>
+                 <% if user.avatar.attached? == true %>
+                    <td><%= image_tag user.avatar ,class: "img" ,id: "a"%></td>
+                    <% else %>
+                     <td> <img src="#" class="img" ></td>
+                    <% end %>
 
                  <% if user.admin? %>
                     <td>true</td>

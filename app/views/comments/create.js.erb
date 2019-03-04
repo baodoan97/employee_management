@@ -6,6 +6,7 @@
 // // $("#abc").html('');
 // // <div class='media'> <br /><div class='media-body'><h5 class='mt-0'><%= @comment.user.username %></h5><p><%= @comment.content %></p></div></div>
 // // <br />
+document.getElementById("user_comment").value = " ";
 $( document ).ready(function() {
 // var comment='<%= @comment.user.id %>';
 var comment = {"avatar":'<%= url_for(current_user.avatar) %>',"username":"<%= @comment.user.username %>","time":"<%= time_ago_in_words(@comment.created_at) %>","content":"<%= @comment.content %>"};
