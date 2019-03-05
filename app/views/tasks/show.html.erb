@@ -39,7 +39,7 @@
 			<% end %>
 			<% if @task.status == "notstarted" %>
 				<% if  @task.users.find_by(id: current_user.id) || @task.users.count == 0 %>
-				 <%= link_to "", change_status_path(:task => @task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+				 <%= link_to "", change_status_path(:task => @task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-lg btn-warning fa fa-thumb-tack"
 				 %>
 				 <% else %>
 				 <button type="button" class="btn btn-lg btn-warning" disabled><span class="fa fa-thumb-tack"></span>

@@ -28,16 +28,14 @@ class TasksController < ApplicationController
         			@user.tasks << @task
         	else   
 	        	while (j<task_params[:user_task_ids].count) do
-	        		
 		        		@user = User.find(task_params[:user_task_ids][j].to_i)
 						@user.tasks << @task
+						TaskMailer.new_task(@user).deliver_now
 					j += 1
 	        	end
         	end
 	        flash[:success] = "Task was created successfully"
-	        if task_params[:user_task_ids]
-	 			TaskMailer.new_task(@user).deliver_now
-	 		end
+	       
 			redirect_to task_path(@task)
 			# debugger
 		else

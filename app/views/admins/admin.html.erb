@@ -26,7 +26,6 @@
                   <th scope="col">ID</th>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Password</th>
                   <th scope="col">Avatar</th>
                   <th scope="col">Admin</th>
                   <th scope="col">Edit</th>
@@ -42,7 +41,6 @@
                   <td scope="row"><%= user.id %></td>
                   <td><%= user.username %></td>
                   <td><%= user.email %></td>
-                  <td><%= truncate(user.password_digest, length: 20) %></td>
                  <% if user.avatar.attached? == true %>
                     <td><%= image_tag user.avatar ,class: "img" ,id: "a"%></td>
                     <% else %>
