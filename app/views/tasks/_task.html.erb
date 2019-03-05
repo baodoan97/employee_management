@@ -1,12 +1,10 @@
-<h1 class="text-center">
+<h1 class="text-center pt-4">
 	<%= form_for(:date,as: :get, url: {action: "index"}, :method => :GET) do |a| %>
-	<%= a.date_field :date,value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
+	<%= a.date_field :date, :placeholder => 'dd/mm/yyyy', value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
 	<%= a.submit raw("&#xf002"), class: "btn btn-lg btn-dark ml-auto fa" %>
 	<% end %>
 </h1>
 <div class="container pt-4">
-	<div class="row">
-		<div class="col-12">
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
@@ -99,8 +97,7 @@
 						</td>
 					</tr>
 				</tbody>
-				<% end %>1
+				<% end %>
 			</table>
-		</div>
-	</div>
+		
 </div>
