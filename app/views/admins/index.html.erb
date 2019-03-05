@@ -46,13 +46,23 @@
                   <i class="fa fa-fw fa-shopping-cart"></i>
                 </div>
                 <div class="mr-5 "style ="text-align:center">
-                  <b >Task Success : <span style="color:black;font-size:2rem">
-                    <% @task = Task.all.count %>
-                    <%= @task %>  </span>
-                  </b>
+                <% count10 = 0 %>
+                <% count20 = 0 %>
+                <b ><span style="color:black;font-size:2rem">Task Share</span>
+                <% @obj = Task.all %>
+                <% @obj.each do |task| %>
+                  <% if task.private == true %>
+                  <% count10 = count10 + 1 %>
+                  <% else %>
+                  <% count20 = count20 + 1 %>
+                  <% end %>
+                <% end %> </br>
+                share: <%= count10 %></br>
+                no share: <%= count20 %></br>
+              </b>
                 </div>
               </div>
-              	<%= link_to " View Details", admins_index_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+              	<%= link_to " View Details", admins_table_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
@@ -61,16 +71,31 @@
                 <div class="card-body-icon">
                   <i class="fa fa-fw fa-life-ring"></i>
                 </div>
+                <% count1 = 0 %>
+                <% count2 = 0 %>
+                <% count3 = 0 %>
                 <div class="mr-5 "style ="text-align:center">
-                  <b >Task Witing : <span style="color:black;font-size:2rem">
-                    <% @task = Task.all.count %>
-                    <%= @task %>  </span>
+                  <b ><span style="color:black;font-size:2rem">Task Info</span>
+                    <% @obj = Task.all %>
+                    <% @obj.each do |task| %>
+                        <% if task.status == "notstarted" %>
+                          <% count1 = count1 + 1 %>
+                            <% elsif task.status == "inprogress" %>
+                            <% count2 = count2 + 1 %>
+                            <% else %>
+                            <% count3 = count3 + 1 %>
+                        <% end %> 
+                    <% end %> </br>
+                    notstarted: <%= count1 %></br>
+                    inprogress: <%= count2 %></br>
+                    done: <%= count3 %>
                   </b>
                 </div>
               </div>
-                <%= link_to " View Details", admins_index_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
+                <%= link_to " View Details", admins_table_path ,class: " fa fa-angle-right card-footer text-white clearfix  z-1 float-left " %>
             </div>
           </div>
         </div>
         <%= render 'foot' %>
       <% end %>
+      
