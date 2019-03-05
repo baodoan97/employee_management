@@ -1,20 +1,19 @@
-  <%= @userr = User.new   %>
 <div class="row">
   <div class="col-lg-6 col-md-12 col-sm-12 m-auto">
     <h1 class="text-center">
       <%= yield(:title) %>
     </h1>
     <br/>
-    <% if @userr.errors.any? %>
+    <% if @user.errors.any? %>
     <div class="alert alert-danger">
       <ul>
-        <% @userr.errors.full_messages.each do |msg| %>
+        <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
     <% end %>
-    <%= form_for @userr do |f| %>
+    <%= form_for @user do |f| %>
     <div class="form-group ">
       <div align="center">
       </div>
@@ -23,7 +22,14 @@
         <label for="file-input">
           <div class="changeavt">
           <i class="fa fa-exchange"></i>
-          <%= image_tag @userr.avatar.url ,class: "img" ,id: "a"%>
+          <% x ="" %>
+        <% if @user.new_record? == false %>
+           <% x = @user.avatar %>
+        <% end %>
+       <% if @user.avatar.attached? == false %>
+           <% x = "" %>
+        <% end %>
+          <%= image_tag x,class: "img",id: "a" %>
          </div>
         </label>
         <%= f.file_field :avatar, id:"file-input" %>
@@ -36,7 +42,7 @@
       </div>
       <%= f.text_field :username, class: "form-control", placeholder:"Enter username"%>
     </div>
-    <% if @userr.new_record? == true %>
+    <% if @user.new_record? == true %>
      <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
@@ -51,12 +57,16 @@
       <%= f.text_field :password, class: "form-control", placeholder:"Enter password", type: "password" %>
     </div>
     <div class="field">
-    <%= f.radio_button :admin, true %> True
-    <%= f.radio_button :admin, false %> False
+   
+    <%= f.check_box :admin, as: :boolean do  %>
+        <%= f.check_box :admin, {}, "true", "false" %>
+      <% end  %>
+      <strong <%= f.label 'Admin' %></strong>
+     <i>*Select checkbox created account with Adminstrator</i>
   </div>
     <div class="form-group ">
       <div align="center">
-        <%= f.submit "Dang ki", class:"btn btn-lg btn-dark ml-auto" %>
+        <%= f.submit "Create", class:"btn btn-lg btn-primary ml-auto" %>
       </div>
     </div>
     <% end %>

@@ -7,53 +7,107 @@
         </li>
         <li class="breadcrumb-item active">List Tasks</li>
       </ol>
-
-      <!-- DataTables Example -->
-      <div class="card mb-3">
-        <div class="card-header"><h2>
-          <i class="fa fa-table"></i>
-        List Task</h2></div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="margin: 0 auto">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th scope="col">Name</th>
-      						<th scope="col">Content</th>
-      						<th scope="col">Employees</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
-                </tr>
-              </thead>
-                  <% obj = Task.all %>
-                	<% obj.each do |task| %>
-              <tbody>
-                <tr>
-                  <th scope="row"><%= task.id %></th>
-      						<td><%= truncate(task.taskname, length: 20) %></td>
-      						<td><%= truncate(task.content, length: 20) %></td>
-      						<td><% task.users.each do |user| %>
-      							#<%= link_to user[:username], user_path(user) %>  &nbsp
-      							<% end %>
-      						</td>
-      						<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
-      						<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
-                </tr>
-              </tbody>
-                <% end %>
-            </table>
-          </div>
-        </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
-
-      <p class="small text-center text-muted my-5">
-        <em>More table examples coming soon...</em>
-      </p>
-
-    </div>
-    <!-- /.container-fluid -->
+<div class="container-fluid pt-4">
+	<div class="row">
+		<div class="col-12">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Content</th>
+						<th scope="col">Priority</th>
+						<th scope="col">Employees</th>
+						<th scope="col">Date</th>
+						<th scope="col">Status</th>
+						<th scope="col">-</th>
+						<% if current_user.admin?%>
+						<th scope="col">-</th>
+						<th scope="col">-</th>
+						<% end %>
+						<th scope="col">-</th>
+						<th scope="col">-</th>
+					</tr>
+        </thead>
+        <% obj = Task.all %>
+				<% obj.each do |task| %>
+				<tbody>
+					<tr>
+						<th scope="row"><%= task.id %></th>
+						<td><%= truncate(task.taskname, length: 15) %></td>
+						<td><%= truncate(task.content, length: 15) %></td>
+						<td>
+							<% if task.level == "low" %>
+								<h5><span class="badge  badge-lg badge-secondary"><%= task.level.upcase %></span></h5>
+							<% elsif  task.level == "normal" %>
+								<h5><span class="badge  badge-lg badge-primary"><%= task.level.upcase %></span></h5>
+								<% elsif task.level == "high" %>
+									<h5><span class="badge  badge-lg badge-warning"><%= task.level.upcase %></span></h5>
+								<% elsif task.level == "highest" %>
+									<h5><span class="badge  badge-lg badge-danger"><%= task.level.upcase %></span></h5>
+							<% end %>
+						</td>
+						<td><% task.users.each do |user| %>
+							#<%= link_to user[:username], user_path(user) %>  &nbsp
+							<% end %>
+						</td>
+						<td> <%= task.date.strftime("%d / %m / %Y") %> </td>
+						<td>
+							 <% if task.status == "notstarted" %>
+							 	<h5><span class="badge  badge-lg badge-secondary">Not Started</span></h5>
+							 <% elsif task.status == "inprogress" %>
+							 	<h5><span class="badge  badge-lg badge-primary">In Progress</span></h5>
+							 	<% else %>
+							 		<h5><span class="badge  badge-lg badge-success">Done</span></h5>
+							 <% end %> 
+						</td>
+						<td> <%= link_to '', task_path(task), class:"btn btn-success btn-md mr-3 fa fa-eye" %> </td>
+						
+						<% if current_user.admin?%>
+						<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
+						<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
+						<% end %>
+						<td>
+							
+								<% if task.status == "notstarted" %>
+									<% if  task.users.find_by(id: current_user.id) || task.users.count == 0 %>
+									 <%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+		    						 %>
+		    						 <% else %>
+		    						 <button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+										</button>
+		    						 <% end %>
+								<% else %>
+									<% if task.status == "inprogress" %>
+									<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
+		    						 %>
+									<% else %>
+										<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+										</button>
+									<% end %>
+								<% end %>
+							
+						
+						</td>
+						<td>
+							<% if task.users.find_by(id: current_user.id) %>
+								<% if task.private == true %>
+									<%= link_to "", change_private_path(:task => task, :private => "false"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-off" %>
+			    				<% else %>
+			    					<%= link_to "", change_private_path(:task => task, :private => "true"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-on" %>
+			    				<% end %>
+	    					<% else %>
+	    						<button type="button" class="btn btn-primary" disabled><span class="fa fa-toggle-off"></span>
+								</button>
+							<% end %>
+						</td>
+					</tr>
+				</tbody>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
     <!-- Sticky Footer -->
     <%= render 'foot' %>
 	<% end %>

@@ -9,9 +9,10 @@
         </ol>
         <h6>Export List of Users</h6>
         <div class="pb-4">
-    <%= link_to "CSV", users_render_path(format: "csv"),type: "button",class:"btn btn-outline-success" %>
-    <%= link_to "Excel", users_render_pathrender_path(format: "xls"),type: "button",class:"btn btn-outline-primary" %>
+    <%= link_to "CSV", users_report_path(format: "csv"),type: "button",class:"btn btn-outline-success" %>
+    <%= link_to "Excel", users_report_path(format: "xls"),type: "button",class:"btn btn-outline-primary" %>
     <br/>
+    <div style="text-align: center;"><%= link_to "Create User", new_admin_path,type: "nav-link",class:"btn btn-outline-primary" %> </div>
     </div>
         <!-- DataTables Example -->
         <div class="card mb-3 ">
@@ -25,8 +26,7 @@
                   <tr>
                     <th scope="col">ID</th>
         						<th scope="col">Username</th>
-        						<th scope="col">Email</th>
-        						<th scope="col">Password</th>
+        						<th scope="col">Email</th>	
                     <th scope="col">Avatar</th>
                     <th scope="col">Admin</th>
                     <th scope="col">Edit</th>
@@ -41,7 +41,6 @@
                     <td scope="row"><%= user.id %></td>
                     <td><%= user.username %></td>
                 	  <td><%= user.email %></td>
-                  	<td><%= truncate(user.password_digest, length: 20) %></td>
                     <% if user.avatar.attached? == true %>
                     <td><%= image_tag user.avatar ,class: "img" ,id: "a"%></td>
                     <% else %>

@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   get 'admins/table'
   get 'error/oop'
   get 'admins/rend'
+  get 'admins/newadmin'
   #get 'admins/edit'
-
+  get 'users/report'
   #get 'admins/edit/:id', to: 'admins#edit', as: 'admins'
   #resouorce// collection/member: routes
 resources :admins

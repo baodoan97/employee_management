@@ -22,11 +22,11 @@ class AdminsController < ApplicationController
   end
 
   def new
-		@user = User.new
+    @user = User.new
 	end
 
   def create
-		@user = User.new(user_params)
+		@user = User.new(admin_users_params)
 		if @user.save
 			session[:user_id] = @user.id
 			flash[:success] = "Welcome to VINOVA's Employees Management System, #{@user.username}"
@@ -63,7 +63,7 @@ class AdminsController < ApplicationController
     end
 
     def admin_users_params
-      params.require(:user).permit(:username, :email, :password,:avatar)
+      params.require(:user).permit(:username, :email, :password,:avatar,:admin)
     end
     def require_same_admin
   			if !current_user.admin?
