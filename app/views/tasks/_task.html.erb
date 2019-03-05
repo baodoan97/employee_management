@@ -1,103 +1,121 @@
-<h1 class="text-center pt-4">
+<div class="search-form">
+	
+	<h1 class="text-center pt-4">
 	<%= form_for(:date,as: :get, url: {action: "index"}, :method => :GET) do |a| %>
-	<%= a.date_field :date, :placeholder => 'dd/mm/yyyy', value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
-	<%= a.submit raw("&#xf002"), class: "btn btn-lg btn-dark ml-auto fa" %>
+	<div class="form-group">
+		<%= a.date_field :date, :placeholder => 'dd/mm/yyyy', value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
+	</div>
+	<div class="form-group">	
+		<%= a.select :status,options_for_select([['notstarted',0],['inprogress',1],['done',2]],  params[:date] == nil ? "Place choose status" : params[:date][:status] ),{}, { :class => 'form-control' } %>
+	</div>
+	<div class="form-group">
+
+		<%= a.select :level,options_for_select([['low',0],['normal',1],['high',2] ,['highest',3]], params[:date] == nil ? "Place choose status" : params[:date][:level] ),{}, { :class => 'form-control' } %>
+	</div>
+	<div class="form-group">
+		<%= a.text_area :taskname, class: "form-control ", placeholder:"Find name task", :value => params[:date] == nil ? nil : params[:date][:taskname] %>
+	</div>
+	<div class="form-group">
+		<%= a.submit raw("&#xf002"), class: "btn btn-lg btn-dark ml-auto fa" %>
+	</div>
 	<% end %>
-</h1>
+	</h1>
+	
+</div>
 <div class="container pt-4">
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Name</th>
-						<th scope="col">Content</th>
-						<th scope="col">Priority</th>
-						<th scope="col">Employees</th>
-						<th scope="col">Date</th>
-						<th scope="col">Status</th>
-						<th scope="col">-</th>
-						<% if current_user.admin?%>
-						<th scope="col">-</th>
-						<th scope="col">-</th>
-						<% end %>
-						<th scope="col">-</th>
-						<th scope="col">-</th>
-					</tr>
-				</thead>
-				<% obj.each do |task| %>
-				<tbody>
-					<tr>
-						<th scope="row"><%= task.id %></th>
-						<td><%= truncate(task.taskname, length: 15) %></td>
-						<td><%= truncate(task.content, length: 15) %></td>
-						<td>
-							<% if task.level == "low" %>
-								<h5><span class="badge  badge-lg badge-secondary"><%= task.level.upcase %></span></h5>
-							<% elsif  task.level == "normal" %>
-								<h5><span class="badge  badge-lg badge-primary"><%= task.level.upcase %></span></h5>
-								<% elsif task.level == "high" %>
-									<h5><span class="badge  badge-lg badge-warning"><%= task.level.upcase %></span></h5>
-								<% elsif task.level == "highest" %>
-									<h5><span class="badge  badge-lg badge-danger"><%= task.level.upcase %></span></h5>
-							<% end %>
-						</td>
-						<td><% task.users.each do |user| %>
-							#<%= link_to user[:username], user_path(user) %>  &nbsp
-							<% end %>
-						</td>
-						<td> <%= task.date.strftime("%d / %m / %Y") %> </td>
-						<td>
-							 <% if task.status == "notstarted" %>
-							 	<h5><span class="badge  badge-lg badge-secondary">Not Started</span></h5>
-							 <% elsif task.status == "inprogress" %>
-							 	<h5><span class="badge  badge-lg badge-primary">In Progress</span></h5>
-							 	<% else %>
-							 		<h5><span class="badge  badge-lg badge-success">Done</span></h5>
-							 <% end %> 
-						</td>
-						<td> <%= link_to '', task_path(task), class:"btn btn-success btn-md mr-3 fa fa-eye" %> </td>
-						
-						<% if current_user.admin?%>
-						<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
-						<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
-						<% end %>
-						<td>
-							
-								<% if task.status == "notstarted" %>
-									<% if  task.users.find_by(id: current_user.id) || task.users.count == 0 %>
-									 <%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
-		    						 %>
-		    						 <% else %>
-		    						 <button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
-										</button>
-		    						 <% end %>
-								<% else %>
-									<% if task.status == "inprogress" %>
-									<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
-		    						 %>
-									<% else %>
-										<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
-										</button>
-									<% end %>
-								<% end %>
-							
-						
-						</td>
-						<td>
-							<% if task.users.find_by(id: current_user.id) %>
-								<% if task.private == true %>
-									<%= link_to "", change_private_path(:task => task, :private => "false"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-off" %>
-			    				<% else %>
-			    					<%= link_to "", change_private_path(:task => task, :private => "true"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-on" %>
-			    				<% end %>
-	    					<% else %>
-	    						<button type="button" class="btn btn-primary" disabled><span class="fa fa-toggle-off"></span>
-								</button>
-							<% end %>
-						</td>
-					</tr>
-				</tbody>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Name</th>
+				<th scope="col">Content</th>
+				<th scope="col">Priority</th>
+				<th scope="col">Employees</th>
+				<th scope="col">Date</th>
+				<th scope="col">Status</th>
+				<th scope="col">-</th>
+				<% if current_user.admin?%>
+				<th scope="col">-</th>
+				<th scope="col">-</th>
 				<% end %>
-			</table>
-		
+				<th scope="col">-</th>
+				<th scope="col">-</th>
+			</tr>
+		</thead>
+		<% obj.each do |task| %>
+		<tbody>
+			<tr>
+				<th scope="row"><%= task.id %></th>
+				<td><%= truncate(task.taskname, length: 15) %></td>
+				<td><%= truncate(task.content, length: 15) %></td>
+				<td>
+					<% if task.level == "low" %>
+					<h5><span class="badge  badge-lg badge-secondary"><%= task.level.upcase %></span></h5>
+					<% elsif  task.level == "normal" %>
+					<h5><span class="badge  badge-lg badge-primary"><%= task.level.upcase %></span></h5>
+					<% elsif task.level == "high" %>
+					<h5><span class="badge  badge-lg badge-warning"><%= task.level.upcase %></span></h5>
+					<% elsif task.level == "highest" %>
+					<h5><span class="badge  badge-lg badge-danger"><%= task.level.upcase %></span></h5>
+					<% end %>
+				</td>
+				<td><% task.users.each do |user| %>
+					#<%= link_to user[:username], user_path(user) %>  &nbsp
+					<% end %>
+				</td>
+				<td> <%= task.date.strftime("%d / %m / %Y") %> </td>
+				<td>
+					<% if task.status == "notstarted" %>
+					<h5><span class="badge  badge-lg badge-secondary">Not Started</span></h5>
+					<% elsif task.status == "inprogress" %>
+					<h5><span class="badge  badge-lg badge-primary">In Progress</span></h5>
+					<% else %>
+					<h5><span class="badge  badge-lg badge-success">Done</span></h5>
+					<% end %>
+				</td>
+				<td> <%= link_to '', task_path(task), class:"btn btn-success btn-md mr-3 fa fa-eye" %> </td>
+				
+				<% if current_user.admin?%>
+				<td> <%= link_to '', edit_task_path(task), class:"btn btn-primary btn-md mr-3 fa fa-pencil" %> </td>
+				<td> <%= link_to '', task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger btn-md fa fa-trash" %></td>
+				<% end %>
+				<td>
+					
+					<% if task.status == "notstarted" %>
+					<% if  task.users.find_by(id: current_user.id) || task.users.count == 0 %>
+					<%= link_to "", change_status_path(:task => task, :status => "inprogress"), method: :put, data: {dismiss: "alert", confirm: "Are you sure to receive this task?"},class: "btn btn-warning fa fa-thumb-tack"
+					%>
+					<% else %>
+					<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+					</button>
+					<% end %>
+					<% else %>
+					<% if task.status == "inprogress" %>
+					<%= link_to "", change_status_path(:task => task, :status => "done"), method: :put, data: {dismiss: "alert", confirm: "Do you complete your task?"},class: "btn btn-warning fa fa-check-circle-o"
+					%>
+					<% else %>
+					<button type="button" class="btn btn-warning" disabled><span class="fa fa-thumb-tack"></span>
+					</button>
+					<% end %>
+					<% end %>
+					
+					
+				</td>
+				<td>
+					<% if task.users.find_by(id: current_user.id) %>
+					<% if task.private == true %>
+					<%= link_to "", change_private_path(:task => task, :private => "false"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-off" %>
+					<% else %>
+					<%= link_to "", change_private_path(:task => task, :private => "true"), method: :put, data: {dismiss: "alert", confirm: "Do you want to share this task?"},class: "btn btn-primary fa fa-toggle-on" %>
+					<% end %>
+					<% else %>
+					<button type="button" class="btn btn-primary" disabled><span class="fa fa-toggle-off"></span>
+					</button>
+					<% end %>
+				</td>
+			</tr>
+		</tbody>
+		<% end %>
+	</table>
+	
 </div>
