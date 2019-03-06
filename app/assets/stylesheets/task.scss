@@ -27,12 +27,13 @@ img.imgcomment.align-self-start.mr-3 {
     height: 80px;
 }
 .search-form {
-    padding: 60px 329px 14px 396px;
+    padding: 60px 329px 14px 298px;
     /* margin-top: 2px; */
 }
 .form-control-search {
-    // display: block;
-    width: 500px;
+    display: block;
+     width: 400px;
+   margin: 0 auto;
     height: calc(2.25rem + 2px);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -57,4 +58,10 @@ img.imgcomment.align-self-start.mr-3 {
 .search-form {
     padding: 19px 204px 0px 182px;
 }
+input#date_date {
+    width: 100%;
+    }
+}
+h1.text-center.pt-4 {
+    border: 1px solid #b5b5b5;
 }
