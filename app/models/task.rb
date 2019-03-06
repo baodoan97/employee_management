@@ -19,5 +19,19 @@ class Task < ApplicationRecord
 		highest: 3
 	}
 	has_many :comments
+	validate :content_type
+	 private
+	 
+     	 def content_type
+     	 	i = 0
+	    self.images.each{ |image|
+             if image.content_type != "image/png" && image.content_type != "image/jpeg"
+                self.images[i].destroy
+                return
+             end  
+             i = i + 1
+	    }
+	   
+       end
 
 end

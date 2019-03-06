@@ -91,7 +91,7 @@ class TasksController < ApplicationController
 	end
 
 	def removetaskuser
-		
+	
 		@usertask = UserTask.find_by(user_id: params[:user], task_id: params[:task])
 		# debugger
 		@usertask.destroy
@@ -100,17 +100,32 @@ class TasksController < ApplicationController
 	end
 
 	def index
+		 search = ""
+		 if params[:date] != nil
+		 params[:date].each { |k,v| 
+		 	if (k == "status" || k == "level") && v != ""
+            search += "#{k} = #{v} and "
+            end
+            if k == "taskname" && v != ""
+               search +=" #{k} LIKE '%#{v}%' and" 
+             end
+		 }
+		end
+        search = search.split(' ')
+        search.delete_at(search.length-1)
+        search = search.join(' ')
+                 
 		if current_user.admin?
 			if params[:date]
-				@task = Task.all.where("DATE(date) = ?", params[:date][:date])
+				@task = Task.all.where(search).where("DATE(date) = ? " ,params[:date][:date])
 			else
-				@task = Task.all.where("DATE(date) = ?", Date.today)
+			   @task = Task.all.where(search).where("DATE(date) = ?", Date.today)
 			end
 		else
 			if params[:date]
-				@task = current_user.tasks.where("DATE(date) = ?", params[:date][:date])
-				@task += Task.includes(:users).where(users: {id:nil}, tasks: {date: params[:date][:date]})
-				@task += Task.joins(:users).where(tasks: {private: 'false', date: params[:date][:date]}).where.not(users: {id: current_user.id})	
+				@task = current_user.tasks.where(search).where("DATE(date) = ?", params[:date][:date])
+				@task += Task.includes(:users).where(search).where(users: {id:nil}, tasks: {date: params[:date][:date]})
+				@task += Task.joins(:users).where(search).where(tasks: {private: 'false', date: params[:date][:date]}).where.not(users: {id: current_user.id})	
 			else
 				@task = current_user.tasks.where("DATE(date) = ?", Date.today)
 				@task += Task.includes(:users).where(users: {id:nil}, tasks: {date: Date.today})
@@ -166,7 +181,8 @@ class TasksController < ApplicationController
 	end
 
 	private
-	def task_params
+
+	def task_params     
 		params.require(:task).permit(:taskname, :content, :date, :status, :level, :private, photo: [], user_task_ids: [])
 	end
     

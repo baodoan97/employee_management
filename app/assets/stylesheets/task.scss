@@ -26,3 +26,35 @@ img.imgcomment.align-self-start.mr-3 {
      width: 80px;
     height: 80px;
 }
+.search-form {
+    padding: 60px 329px 14px 396px;
+    /* margin-top: 2px; */
+}
+.form-control-search {
+    // display: block;
+    width: 500px;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media (max-width: 1200px)
+{
+.form-control-search {
+   display: block;
+   width: 100%;
+}
+}
+@media (max-width: 1100px)
+{
+.search-form {
+    padding: 19px 204px 0px 182px;
+}
+}
