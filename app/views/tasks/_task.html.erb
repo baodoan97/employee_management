@@ -6,14 +6,13 @@
 		<%= a.date_field :date, :placeholder => 'dd/mm/yyyy', value: params[:date] == nil ? Time.now.strftime("%Y-%m-%d") : params[:date][:date] , class: 'form-control-date' %>
 	</div>
 	<div class="form-group">	
-		<%= a.select :status,options_for_select([['notstarted',0],['inprogress',1],['done',2]],  params[:date] == nil ? "Place choose status" : params[:date][:status] ),{}, { :class => 'form-control' } %>
+		<%= a.select :status,options_for_select([['notstarted',0],['inprogress',1],['done',2]],  params[:date] == nil ? "Place choose status" : params[:date][:status] ),{}, { :class => 'form-control-search' } %>
 	</div>
 	<div class="form-group">
-
-		<%= a.select :level,options_for_select([['low',0],['normal',1],['high',2] ,['highest',3]], params[:date] == nil ? "Place choose status" : params[:date][:level] ),{}, { :class => 'form-control' } %>
+		<%= a.select :level,options_for_select([['low',0],['normal',1],['high',2] ,['highest',3]], params[:date] == nil ? "Place choose status" : params[:date][:level] ),{}, { :class => 'form-control-search' } %>
 	</div>
 	<div class="form-group">
-		<%= a.text_area :taskname, class: "form-control ", placeholder:"Find name task", :value => params[:date] == nil ? nil : params[:date][:taskname] %>
+		<%= a.text_area :taskname, class: "form-control-search", placeholder:"Find name task", :value => params[:date] == nil ? nil : params[:date][:taskname] %>
 	</div>
 	<div class="form-group">
 		<%= a.submit raw("&#xf002"), class: "btn btn-lg btn-dark ml-auto fa" %>
